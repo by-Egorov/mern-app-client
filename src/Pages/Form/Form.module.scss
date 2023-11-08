@@ -1,0 +1,117 @@
+@import '../../Mixin';
+@import '../../Variable';
+@import '../../Fonts/Fonts';
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: $bcg-color;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  &__logo {
+    align-self: start;
+    padding: 20px;
+  }
+
+  &__selection {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 329px;
+    height: 59px;
+    background: $secondary-color;
+    color: $primary-color;
+    border-radius: $border-radius;
+    transition: all 0.4s ease-in-out;
+
+    &_btn {
+      box-sizing: border-box;
+      width: 146px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+
+  &__text {
+    padding: 0 20px;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &_input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 15px;
+      & label {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      & input {
+        width: 300px;
+        height: 54px;
+        border-radius: $border-radius;
+        border: 1px solid $primary-color;
+        padding-left: 30px;
+      }
+    }
+  }
+}
+
+.active {
+  color: #fff;
+  transition: all 0.4s ease-in-out;
+  padding: 8px 40px;
+  flex-shrink: 0;
+  border-radius: $border-radius;
+  background-color: $primary-color;
+}
+
+.checked {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox {
+  display: flex;
+  gap: 5px;
+}
+
+.err {
+  font-size: 16px;
+  color: red;
+  padding: 0 10px;
+  text-align: center;
+}
+a {
+  color: #000 !important;
+  text-decoration: none;
+}
+.login {
+  cursor: pointer;
+}
