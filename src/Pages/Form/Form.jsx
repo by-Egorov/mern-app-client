@@ -16,13 +16,13 @@ const Form = ({ user, setUser }) => {
 	const [loginErr, setLoginErr] = useState('')
 
 	const registration = async data => {
-		const { fullName, email, password, avatarUrl } = data
+		const {  email, password, avatarUrl } = data
 		try {
 			const response = await axios.post('auth/register', {
-				fullName,
 				email,
 				password
 			})
+			setUser(response.data)
 			localStorage.setItem('user', JSON.stringify(response.data))
 			navigate('/login')
 		} catch (e) {
@@ -40,7 +40,7 @@ const Form = ({ user, setUser }) => {
 			localStorage.setItem('token', token)
 			console.log(response.data)
 			localStorage.setItem('user', JSON.stringify(response.data))
-			// navigate('/')
+			navigate('/')
 		} catch (e) {
 			alert(e)
 		}
@@ -57,21 +57,6 @@ const Form = ({ user, setUser }) => {
 						</div>
 						 {loginErr && <div className={style.err}>{loginErr}</div>}
 						<form className={style.form}>
-							{location.pathname === '/login' ? null : (
-								<div
-									className={`${style.register__inputs_input} ${style.input_name}`}
-								>
-									<label> User name </label>
-									<input
-										{...register('fullName', { required: true })}
-										type='text'
-									/>
-									{errors?.fullName?.type === 'required' && (
-										<p className={style.err}>Это поле не может быть пустым</p>
-									)}
-								</div>
-							)}
-
 							<div
 								className={`${style.register__inputs_input} ${style.input_email}`}
 							>
