@@ -7,6 +7,7 @@ import Catalog from './Pages/Catalog/Catalog.jsx'
 import Favorite from './Pages/Favorite/Favorite.jsx'
 import Cart from './Pages/Cart/Cart.jsx'
 import User from './components/User/User.jsx'
+import {config} from "dotenv";
 
 function App() {
 	const [user, setUser] = useState(() => {

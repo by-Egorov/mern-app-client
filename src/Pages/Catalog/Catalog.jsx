@@ -3,15 +3,16 @@ import axios from '../../axios'
 import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
+import Product from "../../components/Product/Product";
 
 const Catalog = () => {
-  const [product, setProduct] = useState([])
+  const [productCatalog, setProductCatalog] = useState([])
 
   useEffect(() => {
     axios
       .post('product/get')
       .then((response) => {
-        setProduct(response.data.products)
+        setProductCatalog(response.data.products)
       })
       .catch((error) => {
         console.error(error)
@@ -24,17 +25,12 @@ const Catalog = () => {
       <div className={style.catalog}>
         <h1>Список продуктов</h1>
         <ul>
-          {product.map((product) => (
-            <li key={product._id}>
-              <h3>{product.title}</h3>
-              <p>{product.description}</p>
-              <span>{product.price} USD</span>
-              <img src={product.image} alt={product.title} />
-            </li>
+          {productCatalog.map((product) => (
+           <Product {...product} key={product._id}/>
           ))}
         </ul>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }

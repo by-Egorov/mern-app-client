@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import axios from '../../axios'
-import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import style from './User.module.scss'
 import Button from '../Button/Button'
 import testIcon from '../../assets/Profile/Ellipse.svg'
@@ -9,7 +8,7 @@ import show from '../../assets/Profile/show.svg'
 const User = ({ user, setUser }) => {
 	useEffect(() => {
 		const token = localStorage.getItem('token')
-    axios.get('/auth/me', {
+    axios.get('api/users', {
 				headers: {
 		 			Authorization: `Bearer ${token}`,
 			 		},
@@ -23,7 +22,6 @@ const User = ({ user, setUser }) => {
   }, []);
 
 	const inputFileRef = useRef(null)
-	const navigate = useNavigate()
 	const [avatarURL, setAvatarURL] = useState('')
 
 	const logOut = () => {

@@ -18,7 +18,7 @@ const Form = ({ user, setUser }) => {
 	const registration = async data => {
 		const {  email, password, avatarUrl } = data
 		try {
-			const response = await axios.post('auth/register', {
+			const response = await axios.post('api/register', {
 				email,
 				password
 			})
@@ -32,13 +32,11 @@ const Form = ({ user, setUser }) => {
 	const login = async data => {
 		const { email, password } = data
 		try {
-			const response = await axios.post('auth/login', {
+			const response = await axios.post('api/login', {
 				email,
 				password,
 			})
-			const token = response.data.token;
-			localStorage.setItem('token', token)
-			console.log(response.data)
+
 			localStorage.setItem('user', JSON.stringify(response.data))
 			navigate('/')
 		} catch (e) {
