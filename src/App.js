@@ -10,10 +10,8 @@ import Cart from './Pages/Cart/Cart.jsx'
 import User from './components/User/User.jsx'
 
 function App() {
-	const [user, setUser] = useState(() => {
-		const storedUser = localStorage.getItem('user')
-		return storedUser ? JSON.parse(storedUser) : null
-	})
+	const [user, setUser] = useState(null)
+	
 	useEffect(() => {
     const fetchData = async () => {
       try {

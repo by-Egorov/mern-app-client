@@ -10,7 +10,7 @@ function Profile({ user, setUser }) {
 	return (
 		<>
 			<Header user={user} />
-			{user ? (
+			{user !== null ? (
 				<User user={user} setUser={setUser}/>
 			) : (
 				<div className={style.profile}>

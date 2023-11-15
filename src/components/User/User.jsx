@@ -5,8 +5,13 @@ import testIcon from '../../assets/Profile/Ellipse.svg'
 import show from '../../assets/Profile/show.svg'
 
 const User = ({ user, setUser }) => {
-  
-  const logOut = () => {}
+ 
+
+  const logOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    window.location.reload()
+  }
 
   return (
     <>

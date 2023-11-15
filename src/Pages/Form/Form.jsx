@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {$host} from '../../axios'
+import {$authHost, $host} from '../../axios'
 import style from './Form.module.scss'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
@@ -38,6 +38,10 @@ const Form = ({ user, setUser }) => {
       localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('token', JSON.stringify(response.data.token))
 
+      const userDataResponse = await $authHost.get('/user/me');
+      const userData = userDataResponse.data;
+
+      setUser(userData.user)
       navigate('/')
     } catch (e) {
       alert(e)
