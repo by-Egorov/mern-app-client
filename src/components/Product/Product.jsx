@@ -1,16 +1,17 @@
-import React from 'react';
+import React from 'react'
+import style from './Product.module.scss'
 
-const Product = (product) => {
+const Product = ({ title, description, price, image }) => {
   return (
-    <>product
+    <>
       <li>
-        <h3>{product.title}</h3>
-        <p>{product.description}</p>
-        <span>{product.price} USD</span>
-        <img src={product.image} alt={product.title} />
+        <h3>{title}</h3>
+        <p>{description}</p>
+        <span>{price} USD</span>
+        <img src={image} alt={title} />
       </li>
     </>
   )
 }
 
-export default Product;
+export default Product

@@ -1,28 +1,34 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer/Footer'
 import style from './Cart.module.scss'
 import Header from '../../components/Header/Header'
-import axios from "../../axios";
+import { $authHost, $host } from '../../axios'
+import Product from '../../components/Product/Product'
 
-const Cart = () => {
-    const [productCart, setProductCart] = useState([])
-
-    useEffect(() => {
-        axios
-            .post('product/get')
-            .then((response) => {
-                setProductCart(response.data.products)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }, [])
+const Cart = ({ user }) => {
+  const [productCart, setProductCart] = useState([])
+  const fetchMyCart = async () => {
+    try {
+      const { data } = await $authHost.get('/products/cart')
+      setProductCart(data.list)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    fetchMyCart()
+  }, [])
   return (
     <>
-      <Header/>
+      <Header user={user} />
       <div className={style.cart}>
-        <h1>Cart</h1>
-        <Footer/>
+        <h1>Корзина</h1>
+        <div>
+          {productCart?.map((cart) => (
+            <Product {...cart} key={cart._id} />
+          ))}
+        </div>
+        <Footer />
       </div>
     </>
   )

@@ -5,10 +5,10 @@ import favorites from '../../assets/Shop/favorites.svg'
 import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
 
-const Home = () => {
+const Home = ({user}) => {
 	return (
 		<>
-			<Header />
+			<Header user={user}/>
 				<div className='container'>
 					<section className={style.news}>
 						<div className={style['news__title']}>

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 function Profile({ user, setUser }) {
 	return (
 		<>
-			<Header />
+			<Header user={user} />
 			{user ? (
 				<User user={user} setUser={setUser}/>
 			) : (

@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import axios from '../../axios'
+import {$host} from '../../axios'
 import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
-import Product from "../../components/Product/Product";
+import Product from '../../components/Product/Product'
 
-const Catalog = () => {
+
+const Catalog = ({user}) => {
   const [productCatalog, setProductCatalog] = useState([])
 
+  const fetchMyCatalog = async () => {
+    try {
+      const { data } = await $host.get('/products')
+      setProductCatalog(data.products)
+    } catch (e) {
+      console.log(e)
+    }
+  }
   useEffect(() => {
-    axios
-      .post('product/get')
-      .then((response) => {
-        setProductCatalog(response.data.products)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+    fetchMyCatalog()
   }, [])
 
   return (
     <>
-      <Header />
+      <Header  user={user}/>
       <div className={style.catalog}>
         <h1>Список продуктов</h1>
         <ul>
           {productCatalog.map((product) => (
-           <Product {...product} key={product._id}/>
+            <Product {...product} key={product._id} />
           ))}
         </ul>
       </div>
