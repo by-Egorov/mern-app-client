@@ -35,6 +35,7 @@ const Form = ({ user, setUser }) => {
         email,
         password,
       })
+      
       localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('token', JSON.stringify(response.data.token))
 
@@ -43,8 +44,27 @@ const Form = ({ user, setUser }) => {
 
       setUser(userData.user)
       navigate('/')
-    } catch (e) {
-      alert(e)
+    } catch (error) {
+      // Обработка ошибок при авторизации
+      if (error.response) {
+        // Ошибка пришла от сервера с кодом ответа
+        const status = error.response.status;
+        if (status === 400) {
+          setLoginErr('Пользователь с таким email не найден');
+        } else if (status === 401) {
+          setLoginErr('Неправильный пароль');
+        } else if (status === 409) {
+          setLoginErr('Не верные данные, повторите ввод');
+        } else {
+          setLoginErr('Произошла ошибка при авторизации');
+        }
+      } else if (error.request) {
+        // Ошибка при запросе к серверу
+        setLoginErr('Произошла ошибка при отправке запроса');
+      } else {
+        // Другие ошибки
+        setLoginErr('Произошла неизвестная ошибка');
+      }
     }
   }
 
