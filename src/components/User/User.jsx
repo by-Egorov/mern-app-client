@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { $authHost } from '../../axios'
+import React from 'react'
 import style from './User.module.scss'
 import Button from '../Button/Button'
 import testIcon from '../../assets/Profile/Ellipse.svg'

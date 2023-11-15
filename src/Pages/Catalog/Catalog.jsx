@@ -9,15 +9,16 @@ import Product from '../../components/Product/Product'
 const Catalog = ({user}) => {
   const [productCatalog, setProductCatalog] = useState([])
 
-  const fetchMyCatalog = async () => {
-    try {
-      const { data } = await $host.get('/products')
-      setProductCatalog(data.products)
-    } catch (e) {
-      console.log(e)
-    }
-  }
   useEffect(() => {
+
+    const fetchMyCatalog = async () => {
+      try {
+        const { data } = await $host.get('/products')
+        setProductCatalog(data.products)
+      } catch (e) {
+        console.log(e)
+      }
+    }
     fetchMyCatalog()
   }, [])
 
