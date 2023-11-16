@@ -13,6 +13,7 @@ const Form = ({ user, setUser }) => {
     formState: { errors },
   } = useForm()
   const [loginErr, setLoginErr] = useState('')
+  
   const registration = async (data) => {
     const { email, password } = data
     try {

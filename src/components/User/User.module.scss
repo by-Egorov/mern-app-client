@@ -1,4 +1,4 @@
-@import "../../Variable";
+@import '../../Variable';
 
 .account {
   display: flex;
@@ -31,7 +31,6 @@
     }
 
     &_mail {
-
     }
   }
 
@@ -46,7 +45,6 @@
   &__btn {
     margin-top: 50px;
   }
-
 }
 
 .setting {
@@ -65,4 +63,75 @@
     display: flex;
     justify-content: space-between;
   }
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  &__logo {
+    align-self: start;
+    padding: 20px;
+  }
+
+  &_btn {
+    box-sizing: border-box;
+    width: 146px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &_input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 15px;
+      & label {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      & input {
+        width: 200px;
+        height: 25px;
+        border-radius: $border-radius;
+        border: 1px solid $primary-color;
+        padding-left: 30px;
+      }
+    }
+  }
+}
+.btn {
+  margin-top: 20px;
+}
+.btn_send {
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 35px;
+  border-radius: $border-radius-btn;
+  background: $primary-color;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  box-shadow: $box-shadow;
 }
