@@ -4,7 +4,7 @@ const $host = axios.create({
   baseURL: 'https://egorov-mern.onrender.com/api',
 })
 const $authHost = axios.create({
-  baseURL: https://egorov-mern.onrender.com/api,
+  baseURL: 'https://egorov-mern.onrender.com/api',
 })
 const authInterceptor = (config) => {
   config.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('token'))}`
