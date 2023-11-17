@@ -31,7 +31,7 @@ const Favorite = ({ user }) => {
         productId: selectedProduct._id,
       })
 
-  if (response.ok) {
+  if (response.data) {
   console.error('Продукт успешно добавлен в корзину.')
   } else {
   console.error('Не удалось добавить продукт в корзину.')

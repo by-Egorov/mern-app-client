@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {$host} from '../../axios'
+import {$host, $authHost} from '../../axios'
 import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
@@ -29,14 +29,14 @@ const Catalog = ({user}) => {
 const addToFavorite = async (productId) => {
   const selectedProduct = productCatalog.find(
     (product) => product._id === productId)
-
+console.log(selectedProduct._id)
   if (selectedProduct) {
   try {
   const response = await $authHost.post('/products/favorite/add', {
         productId: selectedProduct._id,
       })
-
-  if (response.ok) {
+console.log(response)
+  if (response.data) {
   console.error('Продукт успешно добавлен в избранное.')
   } else {
   console.error('Не удалось добавить продукт в избранное.')
