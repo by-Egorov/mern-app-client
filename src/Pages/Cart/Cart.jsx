@@ -21,12 +21,6 @@ const Cart = ({ user }) => {
     fetchMyCart()
   }, [])
 
-  useEffect(() => {
-    if (productCart.length === 0) {
-      alert('Войдите в свой аккаунт для просмотра товаров в корзине')
-      navigate('/login')
-    }
-  }, [productCart, navigate])
   return (
     <>
       <Header user={user} />
