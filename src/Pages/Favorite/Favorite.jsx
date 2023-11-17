@@ -24,17 +24,12 @@ const Favorite = ({ user }) => {
   const addToCart = async (productId) => {
   const selectedProduct = productFavorite.find(
     (product) => product._id === productId)
-  alert('favoriteProducts:', productFavorite)
-  alert('selectedProduct:', selectedProduct)
 
-  alert(productFavorite)
   if (selectedProduct) {
   try {
   const response = await $authHost.post('/products/cart/add', {
         productId: selectedProduct._id,
       })
-
-  alert(response)
 
   if (response.ok) {
   console.error('Продукт успешно добавлен в корзину.')
