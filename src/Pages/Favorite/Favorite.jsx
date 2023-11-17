@@ -56,7 +56,7 @@ const Favorite = ({ user }) => {
             <Product
               {...favorite}
               key={favorite._id}
-              addToCart={addToCart)
+              addToCart={addToCart}
             />
           ))}
         </div>
