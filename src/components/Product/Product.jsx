@@ -7,7 +7,7 @@ import { BiMinus } from 'react-icons/bi'
 import { IoMdHeartEmpty } from "react-icons/io"
 import { useLocation } from 'react-router-dom'
 
-const Product = ({ _id, title, description, price, image, customStyle, addToCart }) => {
+const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite }) => {
   const [count, setCount] = useState(1)
 
   const location = useLocation()
@@ -48,6 +48,7 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
         {location.pathname === '/catalog' && (
           <div
             className={style.product__icon}
+            onClick={() => addToFavorite(_id)}
             >
             <IoMdHeartEmpty />
             </div>
