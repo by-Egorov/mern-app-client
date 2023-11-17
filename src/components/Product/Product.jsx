@@ -6,7 +6,7 @@ import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { useLocation } from 'react-router-dom'
 
-const Product = ({ title, description, price, image, customStyle, productFavorite }) => {
+const Product = ({ id, title, description, price, image, customStyle, addToCart }) => {
   const [count, setCount] = useState(1)
 
   const location = useLocation()
@@ -39,6 +39,7 @@ const Product = ({ title, description, price, image, customStyle, productFavorit
         {location.pathname === '/favorite' && (
           <div
             className={style.product__icon}
+            onClick={() => addToCart(id)}
           >
             <IoMdAdd size='25' />
           </div>
