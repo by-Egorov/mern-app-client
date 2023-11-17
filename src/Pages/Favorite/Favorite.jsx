@@ -30,7 +30,9 @@ const Favorite = ({ user }) => {
   alert(productFavorite)
   if (selectedProduct) {
   try {
-  const response = await $authHost.post('/products/cart/add')
+  const response = await $authHost.post('/products/cart/add', {
+        productId: selectedProduct._id,
+      })
 
   alert(response)
 
