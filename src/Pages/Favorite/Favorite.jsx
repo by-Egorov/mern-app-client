@@ -21,30 +21,29 @@ const Favorite = ({ user }) => {
     fetchMyFavorite()
   }, [])
 
-  // const addToCart = async (productId) => {
-  //   const selectedProduct = productFavorite.find(
-  //     (product) => product._id === productId
-  //   )
-  //   console.log('favoriteProducts:', productFavorite)
-  //   console.log('selectedProduct:', selectedProduct)
+  const addToCart = async (productId) => {
+  const selectedProduct = productFavorite.find(
+    (product) => product._id === productId)
+  console.log('favoriteProducts:', productFavorite)
+  console.log('selectedProduct:', selectedProduct)
 
-  //     console.log(productFavorite)
-  //   if (selectedProduct) {
-  //     try {
-  //       const response = await $authHost.post('/products/cart/add')
+  console.log(productFavorite)
+  if (selectedProduct) {
+  try {
+  const response = await $authHost.post('/products/cart/add')
 
-  //       console.log(response)
+  console.log(response)
 
-  //       if (response.ok) {
-  //         console.error('Продукт успешно добавлен в корзину.')
-  //       } else {
-  //         console.error('Не удалось добавить продукт в корзину.')
-  //       }
-  //     } catch (error) {
-  //       console.error('Произошла ошибка при отправке запроса:', error)
-  //     }
-  //   }
-  // }
+  if (response.ok) {
+  console.error('Продукт успешно добавлен в корзину.')
+  } else {
+  console.error('Не удалось добавить продукт в корзину.')
+         }
+       } catch (error) {
+         console.error('Произошла ошибка при отправке запроса:', error)
+       }
+     }
+   }
   return (
     <>
       <Header user={user} />
@@ -55,7 +54,7 @@ const Favorite = ({ user }) => {
             <Product
               {...favorite}
               key={favorite._id}
-              productFavorite={productFavorite}
+              addToCart={addToCart)
             />
           ))}
         </div>
