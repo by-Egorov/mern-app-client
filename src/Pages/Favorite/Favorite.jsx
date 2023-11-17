@@ -20,12 +20,6 @@ const Favorite = ({ user }) => {
   useEffect(() => {
     fetchMyFavorite()
   }, [])
-  useEffect(() => {
-    if (productFavorite.length === 0) {
-      alert('Войдите в свой аккаунт для просмотра избранных товаров')
-      navigate('/login')
-    }
-  }, [productFavorite, navigate])
 
   // const addToCart = async (productId) => {
   //   const selectedProduct = productFavorite.find(
@@ -54,6 +48,7 @@ const Favorite = ({ user }) => {
   return (
     <>
       <Header user={user} />
+      {productFavorite.length > 0 ?
       <div className={style.favorite}>
         <div className={style.favorite__product}>
           {productFavorite?.map((favorite) => (
@@ -64,7 +59,9 @@ const Favorite = ({ user }) => {
             />
           ))}
         </div>
-      </div>
+      </div> :
+      <p>Войдите в свой аккаунт для просмотра избранных товаров</p>
+      }
       <Footer />
     </>
   )
