@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
+import { IoMdHeartEmpty } from "react-icons/io"
 import { useLocation } from 'react-router-dom'
 
 const Product = ({ _id, title, description, price, image, customStyle, addToCart }) => {
@@ -44,6 +45,12 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
             <IoMdAdd size='25' />
           </div>
         )}
+        {location.pathname === '/catalog' && (
+          <div
+            className={style.product__icon}
+            >
+            <IoMdHeartEmpty />
+            </div>
         {location.pathname === '/cart' && (
           <div className={style.product__count}>
             <button
