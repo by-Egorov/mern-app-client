@@ -3,8 +3,8 @@
 	padding-bottom: 70px; 
 
 	&__product {
-		display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(45%, 1fr)); 
-  gap: 15px;
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 15px;
 	}
 }
