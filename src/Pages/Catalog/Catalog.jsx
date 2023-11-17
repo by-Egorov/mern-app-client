@@ -22,14 +22,33 @@ const Catalog = ({user}) => {
     }
     fetchMyCatalog()
   }, [])
+const addToFavorite = async (productId) => {
+  const selectedProduct = productCatalog.find(
+    (product) => product._id === productId)
 
+  if (selectedProduct) {
+  try {
+  const response = await $authHost.post('/products/favorite/add', {
+        productId: selectedProduct._id,
+      })
+
+  if (response.ok) {
+  console.error('Продукт успешно добавлен в избранное.')
+  } else {
+  console.error('Не удалось добавить продукт в избранное.')
+         }
+       } catch (error) {
+         console.error('Произошла ошибка при отправке запроса:', error)
+       }
+     }
+   }
   return (
     <>
       <Header  user={user}/>
       <div className={style.catalog}>
         <div className={style.catalog__product}>
           {productCatalog.map((product) => (
-            <Product {...product} key={product._id} customStyle={CatalogProduct.specialStyles}/>
+            <Product {...product} key={product._id} customStyle={CatalogProduct.specialStyles} addToFavorite={addToFavorite}/>
           ))}
         </div>
       </div>
