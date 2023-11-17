@@ -9,16 +9,20 @@ import CatalogProduct from './CatalogProduct.module.scss'
 
 const Catalog = ({user}) => {
   const [productCatalog, setProductCatalog] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
 
     const fetchMyCatalog = async () => {
       try {
+        setIsLoading(true)
         const { data } = await $host.get('/products')
         setProductCatalog(data.products)
       } catch (e) {
         console.log(e)
-      }
+      } finally {
+        setIsLoading(false)
+        }
     }
     fetchMyCatalog()
   }, [])
@@ -46,11 +50,13 @@ const addToFavorite = async (productId) => {
     <>
       <Header  user={user}/>
       <div className={style.catalog}>
+        {isLoading ? (<p>Loading...</p> ) : (
         <div className={style.catalog__product}>
           {productCatalog.map((product) => (
             <Product {...product} key={product._id} customStyle={CatalogProduct.specialStyles} addToFavorite={addToFavorite}/>
           ))}
         </div>
+        )}
       </div>
       <Footer />
     </>
