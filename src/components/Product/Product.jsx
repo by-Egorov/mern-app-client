@@ -51,6 +51,7 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
             >
             <IoMdHeartEmpty />
             </div>
+            )}
         {location.pathname === '/cart' && (
           <div className={style.product__count}>
             <button
