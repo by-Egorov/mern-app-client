@@ -23,8 +23,7 @@ const Favorite = ({user}) => {
     <>
       <Header user={user}/>
       <div className={style.favorite}>
-        <h1>Избранное</h1>
-        <div>
+        <div className={style.favorite__product}>
           {productFavortie?.map((favorite) => (
             <Product {...favorite} key={favorite._id} />
           ))}

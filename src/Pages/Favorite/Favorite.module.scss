@@ -1,6 +1,10 @@
 .favorite {
-  margin: 100px;
-  & h1 {
-    text-align: center;
-  }
+ margin: 0 auto;
+ padding-bottom: 70px;
+
+ &__product {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+ }
 }

@@ -1,8 +1,72 @@
-.element {
-  width: 300px;
-  height: 300px;
-   & img {
-     width: 250px;
-     height: 250px;
-   }
+@import '../../Variable.scss';
+
+.product {
+  display: flex;
+  align-items: center;
+  width: 374px;
+  height: 145px;
+  padding: 20px;
+  gap: 18px;
+  background: #fff;
+  border-radius: 20px;
+  position: relative;
+
+  &__image {
+    & img {
+      width: 106px;
+      height: 106px;
+      object-fit: contain;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &_title {
+      color: #201a25;
+      font-family: Mulish;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 18px;
+    }
+
+    &_price {
+      font-size: 12px;
+      color: $Secondary-Deep;
+    }
+    &_description {
+      font-size: 14px;
+    }
+  }
+  &__icon {
+    padding: 13px;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    background-color: $bcg-shop;
+    border-radius: 15px;
+  }
+
+  &__count {
+    display: flex;
+    gap: 15px;
+
+    & span {
+      font-size: 20px;
+      color: $Secondary-Deep;
+    }
+    &_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: $bcg-shop;
+      border-radius: 8px;
+      border: none;
+    }
+  }
 }

@@ -18,22 +18,23 @@ const User = ({ user, setUser }) => {
   const handleProductAdd = async (data) => {
     const { title, category, description, price, image } = data
     try {
-      const response = await $authHost.post('/products/add', {
+
+      await $authHost.post('/products/add', {
         title,
         category,
         description,
         price,
         image,
       })
-    
 
-      reset({
+      const emptyFormData = {
         title: '',
         category: '',
         description: '',
         price: '',
         image: '',
-      })
+      }
+      reset(emptyFormData)
     } catch (e) {
       console.log(e)
     }
@@ -137,7 +138,7 @@ const User = ({ user, setUser }) => {
                     <div className={style.setting__info_title}>
                       Добавить продукт.
                     </div>
-                    
+
                     <form className={style.form}>
                       <div
                         className={`${style.register__inputs_input} ${style.input_email}`}

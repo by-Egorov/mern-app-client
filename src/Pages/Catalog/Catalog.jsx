@@ -4,6 +4,7 @@ import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
+import CatalogProduct from './CatalogProduct.module.scss'
 
 
 const Catalog = ({user}) => {
@@ -26,12 +27,11 @@ const Catalog = ({user}) => {
     <>
       <Header  user={user}/>
       <div className={style.catalog}>
-        <h1>Список продуктов</h1>
-        <ul>
+        <div className={style.catalog__product}>
           {productCatalog.map((product) => (
-            <Product {...product} key={product._id} />
+            <Product {...product} key={product._id} customStyle={CatalogProduct.specialStyles}/>
           ))}
-        </ul>
+        </div>
       </div>
       <Footer />
     </>

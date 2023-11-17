@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {$authHost, $host} from '../../axios'
+import { $authHost, $host } from '../../axios'
 import style from './Form.module.scss'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
@@ -13,7 +13,7 @@ const Form = ({ user, setUser }) => {
     formState: { errors },
   } = useForm()
   const [loginErr, setLoginErr] = useState('')
-  
+
   const registration = async (data) => {
     const { email, password } = data
     try {
@@ -36,35 +36,39 @@ const Form = ({ user, setUser }) => {
         email,
         password,
       })
-      
+
       localStorage.setItem('user', JSON.stringify(response.data))
       localStorage.setItem('token', JSON.stringify(response.data.token))
 
-      const userDataResponse = await $authHost.get('/user/me');
-      const userData = userDataResponse.data;
+      if (response.data.token) {
+        const userDataResponse = await $authHost.get('/user/me')
+        const userData = userDataResponse.data
 
-      setUser(userData.user)
-      navigate('/')
+        setUser(userData.user)
+        navigate('/')
+      } else {
+        setLoginErr('Токен отсутствует')
+      }
     } catch (error) {
       // Обработка ошибок при авторизации
       if (error.response) {
         // Ошибка пришла от сервера с кодом ответа
-        const status = error.response.status;
+        const status = error.response.status
         if (status === 400) {
-          setLoginErr('Пользователь с таким email не найден');
+          setLoginErr('Пользователь с таким email не найден')
         } else if (status === 401) {
-          setLoginErr('Неправильный пароль');
+          setLoginErr('Неправильный пароль')
         } else if (status === 409) {
-          setLoginErr('Не верные данные, повторите ввод');
+          setLoginErr('Не верные данные, повторите ввод')
         } else {
-          setLoginErr('Произошла ошибка при авторизации');
+          setLoginErr('Произошла ошибка при авторизации')
         }
       } else if (error.request) {
         // Ошибка при запросе к серверу
-        setLoginErr('Произошла ошибка при отправке запроса');
+        setLoginErr('Произошла ошибка при отправке запроса')
       } else {
         // Другие ошибки
-        setLoginErr('Произошла неизвестная ошибка');
+        setLoginErr('Произошла неизвестная ошибка')
       }
     }
   }
