@@ -3,9 +3,9 @@ import Footer from '../../components/Footer/Footer'
 import style from './Favorite.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
-import {$authHost} from '../../axios'
-const Favorite = ({user}) => {
-  const [productFavortie, setProductFavorite] = useState([])
+import { $authHost } from '../../axios'
+const Favorite = ({ user }) => {
+  const [productFavorite, setProductFavorite] = useState([])
 
   const fetchMyFavorite = async () => {
     try {
@@ -19,13 +19,37 @@ const Favorite = ({user}) => {
     fetchMyFavorite()
   }, [])
 
+  // const addToCart = async (productId) => {
+  //   const selectedProduct = productFavorite.find(
+  //     (product) => product._id === productId
+  //   )
+  //   console.log('favoriteProducts:', productFavorite)
+  //   console.log('selectedProduct:', selectedProduct)
+
+  //     console.log(productFavorite)
+  //   if (selectedProduct) {
+  //     try {
+  //       const response = await $authHost.post('/products/cart/add')
+
+  //       console.log(response)
+
+  //       if (response.ok) {
+  //         console.error('Продукт успешно добавлен в корзину.')
+  //       } else {
+  //         console.error('Не удалось добавить продукт в корзину.')
+  //       }
+  //     } catch (error) {
+  //       console.error('Произошла ошибка при отправке запроса:', error)
+  //     }
+  //   }
+  // }
   return (
     <>
-      <Header user={user}/>
+      <Header user={user} />
       <div className={style.favorite}>
         <div className={style.favorite__product}>
-          {productFavortie?.map((favorite) => (
-            <Product {...favorite} key={favorite._id} />
+          {productFavorite?.map((favorite) => (
+            <Product {...favorite} key={favorite._id} productFavorite={productFavorite}/>
           ))}
         </div>
         <Footer />

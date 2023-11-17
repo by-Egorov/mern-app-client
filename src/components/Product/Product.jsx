@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { $authHost } from '../../axios'
 import classNames from 'classnames'
 import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { useLocation } from 'react-router-dom'
 
-const Product = ({ title, description, price, image, customStyle }) => {
+const Product = ({ title, description, price, image, customStyle, productFavorite }) => {
   const [count, setCount] = useState(1)
 
   const location = useLocation()
@@ -17,6 +18,8 @@ const Product = ({ title, description, price, image, customStyle }) => {
     }
     setCount((prevCount) => prevCount + delta)
   }
+
+  
 
   return (
     <>
@@ -34,7 +37,9 @@ const Product = ({ title, description, price, image, customStyle }) => {
           </div>
         </div>
         {location.pathname === '/favorite' && (
-          <div className={style.product__icon}>
+          <div
+            className={style.product__icon}
+          >
             <IoMdAdd size='25' />
           </div>
         )}
