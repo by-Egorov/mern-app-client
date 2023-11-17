@@ -4,8 +4,10 @@ import style from './Favorite.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
+import { useNavigate } from 'react-router-dom'
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
+  const navigate = useNavigate()
 
   const fetchMyFavorite = async () => {
     try {
@@ -18,6 +20,12 @@ const Favorite = ({ user }) => {
   useEffect(() => {
     fetchMyFavorite()
   }, [])
+  useEffect(() => {
+    if (productFavorite.length === 0) {
+      alert('Войдите в свой аккаунт для просмотра избранных товаров')
+      navigate('/login')
+    }
+  }, [productFavorite, navigate])
 
   // const addToCart = async (productId) => {
   //   const selectedProduct = productFavorite.find(
@@ -49,11 +57,15 @@ const Favorite = ({ user }) => {
       <div className={style.favorite}>
         <div className={style.favorite__product}>
           {productFavorite?.map((favorite) => (
-            <Product {...favorite} key={favorite._id} productFavorite={productFavorite}/>
+            <Product
+              {...favorite}
+              key={favorite._id}
+              productFavorite={productFavorite}
+            />
           ))}
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   )
 }
