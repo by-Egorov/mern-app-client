@@ -5,22 +5,22 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
 import { useNavigate } from 'react-router-dom'
-const Favorite = ({ user, isLoading, serIsLoading}) => {
+const Favorite = ({ user, isLoading, setIsLoading }) => {
   const [productFavorite, setProductFavorite] = useState([])
   const navigate = useNavigate()
 
-  const fetchMyFavorite = async () => {
-    try {
-      setIsLoading(true)
-      const { data } = await $authHost.get('/products/favorite')
-      setProductFavorite(data.list)
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setIsLoading(false)
-      }
-  }
   useEffect(() => {
+    const fetchMyFavorite = async () => {
+      try {
+        
+        const { data } = await $authHost.get('/products/favorite')
+        setProductFavorite(data.list)
+      } catch (e) {
+        console.log(e)
+      } finally {
+       
+      }
+    }
     fetchMyFavorite()
   }, [])
 
@@ -48,17 +48,17 @@ const Favorite = ({ user, isLoading, serIsLoading}) => {
   return (
     <>
       <Header user={user} />
-      
-        <div className={style.favorite}>
-        {!isLoading ?   <div className={style.favorite__product}>
+
+      <div className={style.favorite}>
+        
+          <div className={style.favorite__product}>
             {productFavorite?.map((favorite) => (
               <Product {...favorite} key={favorite._id} addToCart={addToCart} />
             ))}
-          </div> :
-          <p>Loading...</p>
-          }
-        </div>
-      
+          </div>
+        
+      </div>
+
       <Footer />
     </>
   )
