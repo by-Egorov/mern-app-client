@@ -50,7 +50,7 @@ const Favorite = ({ user, isLoading, serIsLoading}) => {
       <Header user={user} />
       
         <div className={style.favorite}>
-        {isLoading ?   <div className={style.favorite__product}>
+        {!isLoading ?   <div className={style.favorite__product}>
             {productFavorite?.map((favorite) => (
               <Product {...favorite} key={favorite._id} addToCart={addToCart} />
             ))}
