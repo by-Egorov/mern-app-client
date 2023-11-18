@@ -50,8 +50,9 @@ const Cart = ({ user, isLoading, setIsLoading}) => {
   return (
     <>
       <Header user={user} />
-      {isLoading ? 
+     
         <div className={style.cart}>
+           {!isLoading ? 
           <div className={style.cart__product}>
             {productCart?.map((cart) => (
               <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
