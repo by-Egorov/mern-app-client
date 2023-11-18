@@ -6,17 +6,20 @@ import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 
-const Cart = ({ user }) => {
+const Cart = ({ user, isLoading, setIsLoading}) => {
   const navigate = useNavigate()
   const [productCart, setProductCart] = useState([])
   const fetchMyCart = async () => {
     try {
+      setIsLoading(true)
       const { data } = await $authHost.get('/products/cart')
       console.log(data)
       setProductCart(data.list)
     } catch (e) {
       console.log(e)
-    }
+    } finally {
+      setIsLoading(false)
+      }
   }
   console.log(productCart)
   useEffect(() => {
@@ -47,17 +50,17 @@ const Cart = ({ user }) => {
   return (
     <>
       <Header user={user} />
-      {productCart.length > 0 ? (
+      {isLoading ? 
         <div className={style.cart}>
           <div className={style.cart__product}>
             {productCart?.map((cart) => (
               <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
             ))}
           </div>
+          :
+          <p>Loading...</p>
+          }
         </div>
-      ) : (
-        <p>Войдите в свой аккаунт для просмотра товаров в корзине</p>
-      )}
       <Footer />
     </>
   )
