@@ -12,6 +12,7 @@ import User from './components/User/User.jsx'
 
 function App() {
 	const [user, setUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 	
 	useEffect(() => {
     const fetchData = async () => {
@@ -35,9 +36,9 @@ function App() {
 					element={<Profile user={user} setUser={setUser} />}
 				/>
 				<Route path="/user-info" element={<User user={user}/>} />
-				<Route path="/catalog" element={<Catalog user={user}/>} />
-				<Route path="/favorite" element={<Favorite user={user}/>} />
-				<Route path="/cart" element={<Cart user={user}/>} />
+				<Route path="/catalog" element={<Catalog user={user} isLoading={isLoading} setIsLoading={setIsLoading}/>} />
+				<Route path="/favorite" element={<Favorite user={user}/>} isLoading={isLoading} setIsLoading={setIsLoading}/>
+				<Route path="/cart" element={<Cart user={user}/>} isLoading={isLoading} setIsLoading={setIsLoading}/>
 				<Route path=":id" element={<ProductPage />} />
 				<Route
 					path="/register"
