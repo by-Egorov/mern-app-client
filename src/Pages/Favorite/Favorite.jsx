@@ -22,42 +22,40 @@ const Favorite = ({ user }) => {
   }, [])
 
   const addToCart = async (productId) => {
-  const selectedProduct = productFavorite.find(
-    (product) => product._id === productId)
+    const selectedProduct = productFavorite.find(
+      (product) => product._id === productId
+    )
 
-  if (selectedProduct) {
-  try {
-  const response = await $authHost.post('/products/cart/add', {
-        productId: selectedProduct._id,
-      })
+    if (selectedProduct) {
+      try {
+        const response = await $authHost.post('/products/cart/add', {
+          productId: selectedProduct._id,
+        })
 
-  if (response.data) {
-  console.error('Продукт успешно добавлен в корзину.')
-  } else {
-  console.error('Не удалось добавить продукт в корзину.')
-         }
-       } catch (error) {
-         console.error('Произошла ошибка при отправке запроса:', error)
-       }
-     }
-   }
+        if (response.data) {
+          console.error('Продукт успешно добавлен в корзину.')
+        } else {
+          console.error('Не удалось добавить продукт в корзину.')
+        }
+      } catch (error) {
+        console.error('Произошла ошибка при отправке запроса:', error)
+      }
+    }
+  }
   return (
     <>
       <Header user={user} />
-      {productFavorite.length > 0 ?
-      <div className={style.favorite}>
-        <div className={style.favorite__product}>
-          {productFavorite?.map((favorite) => (
-            <Product
-              {...favorite}
-              key={favorite._id}
-              addToCart={addToCart}
-            />
-          ))}
+      {productFavorite.length > 0 ? (
+        <div className={style.favorite}>
+          <div className={style.favorite__product}>
+            {productFavorite?.map((favorite) => (
+              <Product {...favorite} key={favorite._id} addToCart={addToCart} />
+            ))}
+          </div>
         </div>
-      </div> :
-      <p>Войдите в свой аккаунт для просмотра избранных товаров</p>
-      }
+      ) : (
+        <p>Войдите в свой аккаунт для просмотра избранных товаров</p>
+      )}
       <Footer />
     </>
   )

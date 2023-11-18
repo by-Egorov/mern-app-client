@@ -7,6 +7,7 @@ import Form from './Pages/Form/Form.jsx'
 import Catalog from './Pages/Catalog/Catalog.jsx'
 import Favorite from './Pages/Favorite/Favorite.jsx'
 import Cart from './Pages/Cart/Cart.jsx'
+import ProductPage from './Pages/ProductPage/ProductPage.jsx'
 import User from './components/User/User.jsx'
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
 				<Route path="/catalog" element={<Catalog user={user}/>} />
 				<Route path="/favorite" element={<Favorite user={user}/>} />
 				<Route path="/cart" element={<Cart user={user}/>} />
+				<Route path=":id" element={<ProductPage />} />
 				<Route
 					path="/register"
 					element={<Form user={user} setUser={setUser} />}

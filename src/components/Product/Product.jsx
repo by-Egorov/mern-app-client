@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { $authHost } from '../../axios'
 import classNames from 'classnames'
 import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { IoMdHeartEmpty } from "react-icons/io"
-import { useLocation } from 'react-router-dom'
+import { AiOutlineDelete } from "react-icons/ai"
+import { Link, useLocation } from 'react-router-dom'
 
-const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite }) => {
+const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart}) => {
   const [count, setCount] = useState(1)
 
   const location = useLocation()
@@ -23,7 +23,7 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
   
 
   return (
-    <>
+    
       <li className={productClasses}>
         <div className={style.product__image}>
           <img src={image} alt={title} />
@@ -70,8 +70,18 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
             </button>
           </div>
         )}
+        {location.pathname === '/cart' && 
+          <div>
+             <div
+            className={style.product__icon}
+            onClick={() => deleteInCart(_id)}
+            >
+            <AiOutlineDelete />
+            </div>
+          </div>
+        }
       </li>
-    </>
+    
   )
 }
 

@@ -10,7 +10,6 @@ import CatalogProduct from './CatalogProduct.module.scss'
 const Catalog = ({user}) => {
   const [productCatalog, setProductCatalog] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
 
     const fetchMyCatalog = async () => {

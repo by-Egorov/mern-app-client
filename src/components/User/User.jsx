@@ -7,6 +7,7 @@ import testIcon from '../../assets/Profile/Ellipse.svg'
 import show from '../../assets/Profile/show.svg'
 
 const User = ({ user, setUser }) => {
+ 
   const {
     register,
     handleSubmit,
@@ -16,9 +17,9 @@ const User = ({ user, setUser }) => {
   const isAdmin = user.roles.includes('ADMIN')
 
   const handleProductAdd = async (data) => {
+   
     const { title, category, description, price, image } = data
     try {
-
       await $authHost.post('/products/add', {
         title,
         category,
@@ -39,6 +40,7 @@ const User = ({ user, setUser }) => {
       console.log(e)
     }
   }
+
 
   const logOut = () => {
     localStorage.removeItem('token')
@@ -139,7 +141,7 @@ const User = ({ user, setUser }) => {
                       Добавить продукт.
                     </div>
 
-                    <form className={style.form}>
+                    <div className={style.form}>
                       <div
                         className={`${style.register__inputs_input} ${style.input_email}`}
                       >
@@ -164,7 +166,6 @@ const User = ({ user, setUser }) => {
                         <label>Price</label>
                         <input {...register('price')} type='number' />
                       </div>
-
                       <div
                         className={`${style.register__inputs_input} ${style.input_password}`}
                       >
@@ -179,7 +180,7 @@ const User = ({ user, setUser }) => {
                           Добавить
                         </button>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </li>
               ) : null}
