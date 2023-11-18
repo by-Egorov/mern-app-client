@@ -5,17 +5,20 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
 import { useNavigate } from 'react-router-dom'
-const Favorite = ({ user }) => {
+const Favorite = ({ user, isLoading, serIsLoading}) => {
   const [productFavorite, setProductFavorite] = useState([])
   const navigate = useNavigate()
 
   const fetchMyFavorite = async () => {
     try {
+      setIsLoading(true)
       const { data } = await $authHost.get('/products/favorite')
       setProductFavorite(data.list)
     } catch (e) {
       console.log(e)
-    }
+    } finally {
+      setIsLoading(false)
+      }
   }
   useEffect(() => {
     fetchMyFavorite()
@@ -45,17 +48,17 @@ const Favorite = ({ user }) => {
   return (
     <>
       <Header user={user} />
-      {productFavorite.length > 0 ? (
+      
         <div className={style.favorite}>
-          <div className={style.favorite__product}>
+        {isLoading ?   <div className={style.favorite__product}>
             {productFavorite?.map((favorite) => (
               <Product {...favorite} key={favorite._id} addToCart={addToCart} />
             ))}
-          </div>
+          </div> :
+          <p>Loading...</p>
+          }
         </div>
-      ) : (
-        <p>Войдите в свой аккаунт для просмотра избранных товаров</p>
-      )}
+      
       <Footer />
     </>
   )
