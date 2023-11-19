@@ -6,18 +6,21 @@ import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 
-const Cart = ({ user, isLoading, setIsLoading }) => {
+const Cart = ({ user }) => {
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true)
   const [productCart, setProductCart] = useState([])
 
   useEffect(() => {
     const fetchMyCart = async () => {
       try {
+        setIsLoading(true)
         const { data } = await $authHost.get('/products/cart')
         setProductCart(data.list)
       } catch (e) {
         console.log(e)
       } finally {
+        setIsLoading(false)
       }
     }
     fetchMyCart()
@@ -49,6 +52,7 @@ const Cart = ({ user, isLoading, setIsLoading }) => {
 
       <div className={style.cart}>
         <div className={style.cart__product}>
+          {isLoading && <p>Loading...</p>}
           {productCart?.map((cart) => (
             <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
           ))}

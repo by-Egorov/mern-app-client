@@ -7,7 +7,8 @@ import Product from '../../components/Product/Product'
 import CatalogProduct from './CatalogProduct.module.scss'
 
 
-const Catalog = ({user, isLoading, setIsLoading}) => {
+const Catalog = ({user }) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [productCatalog, setProductCatalog] = useState([])
   useEffect(() => {
 
@@ -48,7 +49,7 @@ console.log(response)
     <>
       <Header  user={user}/>
       <div className={style.catalog}>
-        {isLoading ? (<p>Loading...</p> ) : (
+        {isLoading ? <p>Loading...</p> : (
         <div className={style.catalog__product}>
           {productCatalog.map((product) => (
             <Product {...product} key={product._id} customStyle={CatalogProduct.specialStyles} addToFavorite={addToFavorite}/>

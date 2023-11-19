@@ -11,10 +11,10 @@ import ProductPage from './Pages/ProductPage/ProductPage.jsx'
 import User from './components/User/User.jsx'
 
 function App() {
-	const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-	
-	useEffect(() => {
+  const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await $authHost.get('/user/me')
@@ -27,27 +27,46 @@ function App() {
 
     fetchData()
   }, [])
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Home user={user}/>} />
-				<Route
-					path="/profile"
-					element={<Profile user={user} setUser={setUser} />}
-				/>
-				<Route path="/user-info" element={<User user={user}/>} />
-				<Route path="/catalog" element={<Catalog user={user} isLoading={isLoading} setIsLoading={setIsLoading}/>} />
-				<Route path="/favorite" element={<Favorite user={user}/>} isLoading={isLoading} setIsLoading={setIsLoading}/>
-				<Route path="/cart" element={<Cart user={user}/>} isLoading={isLoading} setIsLoading={setIsLoading}/>
-				<Route path=":id" element={<ProductPage />} />
-				<Route
-					path="/register"
-					element={<Form user={user} setUser={setUser} />}
-				/>
-				<Route path="/login" element={<Form user={user} setUser={setUser} />} />
-			</Routes>
-		</Router>
-	)
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home user={user} />} />
+        <Route
+          path='/profile'
+          element={<Profile user={user} setUser={setUser} />}
+        />
+        <Route path='/user-info' element={<User user={user} />} />
+        <Route
+          path='/catalog'
+          element={
+            <Catalog
+              user={user}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          }
+        />
+        <Route
+          path='/favorite'
+          element={<Favorite user={user} />}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+        <Route
+          path='/cart'
+          element={<Cart user={user} />}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+        <Route path=':id' element={<ProductPage />} />
+        <Route
+          path='/register'
+          element={<Form user={user} setUser={setUser} />}
+        />
+        <Route path='/login' element={<Form user={user} setUser={setUser} />} />
+      </Routes>
+    </Router>
+  )
 }
 
 export default App
