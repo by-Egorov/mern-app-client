@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
 import { useNavigate } from 'react-router-dom'
+import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
   const navigate = useNavigate()
@@ -55,7 +56,7 @@ const Favorite = ({ user }) => {
       <div className={style.favorite}>
         
           <div className={style.favorite__product}>
-            {isLoading && <p>Loading...</p>}
+            {isLoading && <ProductSkeleton products={4}/>}
             {productFavorite?.map((favorite) => (
               <Product {...favorite} key={favorite._id} addToCart={addToCart} />
             ))}

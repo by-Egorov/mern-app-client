@@ -5,7 +5,8 @@ import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { IoMdHeartEmpty } from "react-icons/io"
 import { AiOutlineDelete } from "react-icons/ai"
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart}) => {
   const [count, setCount] = useState(1)

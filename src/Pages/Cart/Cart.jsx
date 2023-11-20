@@ -5,6 +5,7 @@ import style from './Cart.module.scss'
 import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
+import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 
 const Cart = ({ user }) => {
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ const Cart = ({ user }) => {
 
       <div className={style.cart}>
         <div className={style.cart__product}>
-          {isLoading && <p>Loading...</p>}
+        {isLoading && <ProductSkeleton products={4}/>}
           {productCart?.map((cart) => (
             <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
           ))}
