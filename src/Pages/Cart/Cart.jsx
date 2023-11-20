@@ -58,7 +58,6 @@ const Cart = ({ user }) => {
             <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
           ))}
         </div>
-        <div>{total}</div>
       </div>
       <Footer />
     </>
