@@ -11,6 +11,7 @@ const Cart = ({ user }) => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
   const [productCart, setProductCart] = useState([])
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     const fetchMyCart = async () => {
@@ -25,6 +26,15 @@ const Cart = ({ user }) => {
       }
     }
     fetchMyCart()
+  }, [])
+  useEffect(() => {
+   const totalPrice = async() => {
+    productCart.forEach((product) => {
+      setTotal(prev => prev += product.price)
+    })
+    localStorage.setItem('totalPriceCart', JSON.stringify(setTotal))
+  }
+  totalPrice()
   }, [])
 
   const deleteInCart = async (productId) => {
@@ -58,6 +68,7 @@ const Cart = ({ user }) => {
             <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
           ))}
         </div>
+        <div>{total}</div>
       </div>
       <Footer />
     </>
