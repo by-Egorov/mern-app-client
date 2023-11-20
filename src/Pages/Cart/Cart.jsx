@@ -31,14 +31,14 @@ const Cart = ({ user }) => {
     const selectedProduct = productCart.find(
       (product) => product._id === productId
     )
-    console.log(selectedProduct._id)
     if (selectedProduct) {
       try {
-        const response = await $authHost.post('/products/cart/delete', {
-          productId: selectedProduct._id,
+        const response = await $authHost.delete('/products/cart/delete', {
+          data: { productId: selectedProduct._id }
         })
         if (response.data) {
-          console.error('Продукт успешно удален.')
+          window.location.reload()
+          console.log('Продукт успешно удален.')
         } else {
           console.error('Не удалось удалить продукт.')
         }

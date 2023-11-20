@@ -11,6 +11,12 @@
   border-radius: 20px;
   position: relative;
 
+  &__more {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
   &__image {
     & img {
       width: 106px;

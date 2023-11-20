@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { $host, $authHost } from '../../axios'
 import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
@@ -45,6 +45,12 @@ const Catalog = ({ user }) => {
       }
     }
   }
+//   const handleGetProduct = useCallback(async() => {
+//     const {data} = await $authHost.get(`/products/${params.id}`)
+//     setProductId(data)
+// }, [params.id])
+
+
   return (
     <>
       <Header user={user} />

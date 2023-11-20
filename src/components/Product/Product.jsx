@@ -5,13 +5,13 @@ import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { IoMdHeartEmpty } from "react-icons/io"
 import { AiOutlineDelete } from "react-icons/ai"
-import { useLocation } from 'react-router-dom'
+import { CiCircleMore } from "react-icons/ci";
+import { useLocation, Link } from 'react-router-dom'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart}) => {
-  const [count, setCount] = useState(1)
-
   const location = useLocation()
+  const [count, setCount] = useState(1)
   const productClasses = classNames(style.product, customStyle)
 
   const handleCountChange = (delta) => {
@@ -21,11 +21,13 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
     setCount((prevCount) => prevCount + delta)
   }
 
-  
 
   return (
     
       <li className={productClasses}>
+       <Link to={`/${_id}`}><div className={style.product__more}>
+       <CiCircleMore size={18}/>
+          </div></Link>
         <div className={style.product__image}>
           <img src={image} alt={title} />
         </div>
