@@ -11,6 +11,8 @@ const Cart = ({ user }) => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
   const [productCart, setProductCart] = useState([])
+  const [totalPrice, setTotalPrice] = useState('')
+  const [count, setCount] = useState(1)
 
   useEffect(() => {
     const fetchMyCart = async () => {
@@ -26,6 +28,16 @@ const Cart = ({ user }) => {
     }
     fetchMyCart()
   }, [])
+  
+  const handleCountChange = (delta, productId) => {
+    setProductCart((prevProductCart) =>
+    prevProductCart.map((product) =>
+      product._id === productId
+        ? { ...product, count: Math.max(1, product.count + delta) }
+        : product
+    )
+  )
+  }
 
   const deleteInCart = async (productId) => {
     const selectedProduct = productCart.find(
@@ -55,9 +67,10 @@ const Cart = ({ user }) => {
         <div className={style.cart__product}>
         {isLoading && <ProductSkeleton products={4}/>}
           {productCart?.map((cart) => (
-            <Product {...cart} key={cart._id} deleteInCart={deleteInCart} />
+            <Product {...cart} key={cart._id}  handleCountChange={(delta) => handleCountChange(delta, cart._id)} deleteInCart={deleteInCart} />
           ))}
         </div>
+        <div>Total:</div>
       </div>
       <Footer />
     </>

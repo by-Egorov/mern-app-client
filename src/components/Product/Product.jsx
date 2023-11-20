@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
@@ -9,17 +9,10 @@ import { CiCircleMore } from "react-icons/ci";
 import { useLocation, Link } from 'react-router-dom'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart}) => {
-  const location = useLocation()
-  const [count, setCount] = useState(1)
+const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart, handleCountChange, count}) => {
   const productClasses = classNames(style.product, customStyle)
-
-  const handleCountChange = (delta) => {
-    if (delta === -1 && count === 1) {
-      return
-    }
-    setCount((prevCount) => prevCount + delta)
-  }
+  const location = useLocation()
+  
 
 
   return (
@@ -60,14 +53,14 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
           <div className={style.product__count}>
             <button
               className={style.product__count_btn}
-              onClick={() => handleCountChange(-1)}
+              onClick={() => handleCountChange(-1, _id)}
             >
               <BiMinus size='18' />
             </button>
             <span>{count}</span>
             <button
               className={style.product__count_btn}
-              onClick={() => handleCountChange(1)}
+              onClick={() => handleCountChange(1, _id)}
             >
               <IoMdAdd size='18' />
             </button>
