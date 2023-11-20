@@ -28,7 +28,7 @@ const Cart = ({ user }) => {
     fetchMyCart()
   }, [])
   useEffect(() => {
-   const totalPrice = async() => {
+   const totalPrice = () => {
     productCart.forEach((product) => {
       setTotal(prev => prev += product.price)
     })
