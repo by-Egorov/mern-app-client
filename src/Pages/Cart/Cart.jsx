@@ -30,7 +30,7 @@ const Cart = ({ user }) => {
   useEffect(() => {
    const totalPrice = () => {
     productCart.forEach((product) => {
-      setTotal(prev => prev += product.price)
+      setTotal(total += product.price)
     })
     localStorage.setItem('totalPriceCart', JSON.stringify(setTotal))
   }
