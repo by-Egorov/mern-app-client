@@ -11,6 +11,10 @@
   border-radius: 20px;
   position: relative;
 
+   .active {
+    transform: translateX(300px);
+  }
+
   &__more {
     position: absolute;
     top: 5px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import style from './Home.module.scss'
 import newsIcon from '../../assets/Shop/Icons.svg'
 import favorites from '../../assets/Shop/favorites.svg'

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { $host, $authHost } from '../../axios'
 import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'

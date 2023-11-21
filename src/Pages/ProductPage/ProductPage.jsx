@@ -12,7 +12,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data} = await $authHost.get(`/products/${params.id}`)
+        const {data} = await $authHost.get(`/product/${params.id}`)
         setProduct(data.product)
       } catch (error) {
         console.error('Ошибка при получении продукта:', error)

@@ -58,7 +58,7 @@ function App() {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-        <Route path=':id' element={<ProductPage />} />
+        <Route path='/product/:id' element={<ProductPage />} />
         <Route
           path='/register'
           element={<Form user={user} setUser={setUser} />}

@@ -6,18 +6,15 @@ import Button from '../Button/Button'
 import testIcon from '../../assets/Profile/Ellipse.svg'
 import show from '../../assets/Profile/show.svg'
 
-const User = ({ user, setUser }) => {
- 
+const User = ({ user }) => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm()
   const isAdmin = user.roles.includes('ADMIN')
 
   const handleProductAdd = async (data) => {
-   
     const { title, category, description, price, image } = data
     try {
       await $authHost.post('/products/add', {
@@ -40,7 +37,6 @@ const User = ({ user, setUser }) => {
       console.log(e)
     }
   }
-
 
   const logOut = () => {
     localStorage.removeItem('token')

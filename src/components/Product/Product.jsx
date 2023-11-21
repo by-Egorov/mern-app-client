@@ -9,16 +9,14 @@ import { CiCircleMore } from "react-icons/ci";
 import { useLocation, Link } from 'react-router-dom'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart, handleCountChange, count}) => {
+const Product = ({ _id, title, description, price, image, customStyle, addToCart, addToFavorite, deleteInCart, handleCountChange, count, isOpen}) => {
   const productClasses = classNames(style.product, customStyle)
   const location = useLocation()
   
-
-
   return (
     
-      <li className={productClasses}>
-       <Link to={`/${_id}`}><div className={style.product__more}>
+      <li className={`${productClasses} ${ isOpen ? 'active' : '' }`}>
+       <Link to={`/product/${_id}`}><div className={style.product__more}>
        <CiCircleMore size={18}/>
           </div></Link>
         <div className={style.product__image}>

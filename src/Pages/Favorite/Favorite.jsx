@@ -4,11 +4,9 @@ import style from './Favorite.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
-import { useNavigate } from 'react-router-dom'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
-  const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
   
