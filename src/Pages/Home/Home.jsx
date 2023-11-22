@@ -9,7 +9,7 @@ const Home = ({user}) => {
 	return (
 		<>
 			<Header user={user}/>
-				<div className='container'>
+				<div className={style.home}>
 					<section className={style.news}>
 						<div className={style['news__title']}>
 							<h1>News & Community</h1>
