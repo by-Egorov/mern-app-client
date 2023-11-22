@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
-import ReactTouchEvents from 'react-touch-events'
+import Button from '../../components/Button/Button'
 
 const Cart = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -67,19 +67,6 @@ const Cart = ({ user }) => {
     }
   }
 
-  const handleTap = () => {
-    console.log('you have taped me')
-  }
-
-  const handleSwipe = (direction) => {
-    switch (direction) {
-      case 'top':
-      case 'bottom':
-      case 'left':
-      case 'right':
-        console.log(`you swiped ${direction}`)
-    }
-  }
   return (
     <>
       <Header user={user} />
@@ -96,15 +83,20 @@ const Cart = ({ user }) => {
               isOpen={isOpen}
             />
           ))}
-
-          <div className={style.total}>
-            Total:
-            {productCart &&
-              productCart.reduce((acc, rec) => acc + rec.price, 0)}
+        </div>
+        <div className={style.cart__total}>
+         <div className={style.cart__total_price}>
+           <span className={style.cart__total_price_title}>Total:</span>
+           <span className={style.cart__total_price_sum}>
+             $
+            {' '}
+             {productCart &&
+                 productCart.reduce((acc, rec) => acc + rec.price, 0)}
+          </span>
+         </div>
+          <div className={style.cart__total_button}>
+            <Button className={`button ${style.cart__total_button_btn}` }>Купить</Button>
           </div>
-          <ReactTouchEvents onTap={handleTap} onSwipe={handleSwipe}>
-            <button>Tap me</button>
-          </ReactTouchEvents>
         </div>
       </div>
       <Footer />
