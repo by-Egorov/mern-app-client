@@ -5,20 +5,23 @@
   align-items: center;
   width: 374px;
   height: 145px;
-  padding: 20px;
   gap: 18px;
   background: #fff;
   border-radius: 20px;
   position: relative;
 
-   .active {
+  .active {
     transform: translateX(300px);
   }
 
   &__more {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 0;
+    right: 0;
+    border-radius: 15px;
+    padding: 13px;
+    background-color: #f8f8f8;
+
   }
 
   &__image {
@@ -47,10 +50,12 @@
       font-size: 12px;
       color: $Secondary-Deep;
     }
+
     &_description {
       font-size: 14px;
     }
   }
+
   &__icon {
     padding: 13px;
     position: absolute;
@@ -68,6 +73,7 @@
       font-size: 20px;
       color: $Secondary-Deep;
     }
+
     &_btn {
       display: flex;
       align-items: center;
@@ -79,4 +85,5 @@
       border: none;
     }
   }
+
 }

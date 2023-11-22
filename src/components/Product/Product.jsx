@@ -16,7 +16,7 @@ const Product = ({ _id, title, description, price, image, customStyle, addToCart
   return (
     
       <li className={`${productClasses} ${ isOpen ? 'active' : '' }`}>
-       <Link to={`/product/${_id}`}><div className={style.product__more}>
+       <Link to={`/${_id}`}><div className={style.product__more}>
        <CiCircleMore size={18}/>
           </div></Link>
         <div className={style.product__image}>

@@ -5,18 +5,18 @@ import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
+import ReactTouchEvents from 'react-touch-events'
 
 const Cart = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [productCart, setProductCart] = useState([])
   const [isOpen, setIsOpen] = useState(false)
-  
 
   useEffect(() => {
     const fetchMyCart = async () => {
       try {
         setIsLoading(true)
-        const { data } = await $authHost.get('/products/cart')
+        const { data } = await $authHost.get('/cart')
         setProductCart(data.list)
         localStorage.setItem('productCart', JSON.stringify(data.list))
       } catch (e) {
@@ -53,7 +53,7 @@ const Cart = ({ user }) => {
     )
     if (selectedProduct) {
       try {
-        const response = await $authHost.delete('/products/cart/delete', {
+        const response = await $authHost.delete('/cart/remove', {
           data: { productId: selectedProduct._id },
         })
         if (!response.ok) {
@@ -67,6 +67,19 @@ const Cart = ({ user }) => {
     }
   }
 
+  const handleTap = () => {
+    console.log('you have taped me')
+  }
+
+  const handleSwipe = (direction) => {
+    switch (direction) {
+      case 'top':
+      case 'bottom':
+      case 'left':
+      case 'right':
+        console.log(`you swiped ${direction}`)
+    }
+  }
   return (
     <>
       <Header user={user} />
@@ -89,6 +102,9 @@ const Cart = ({ user }) => {
             {productCart &&
               productCart.reduce((acc, rec) => acc + rec.price, 0)}
           </div>
+          <ReactTouchEvents onTap={handleTap} onSwipe={handleSwipe}>
+            <button>Tap me</button>
+          </ReactTouchEvents>
         </div>
       </div>
       <Footer />

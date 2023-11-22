@@ -31,7 +31,7 @@ const Catalog = ({ user }) => {
     console.log(selectedProduct._id)
     if (selectedProduct) {
       try {
-        const response = await $authHost.post('/products/favorite/add', {
+        const response = await $authHost.post('/favorites/add', {
           productId: selectedProduct._id,
         })
         console.log(response)
@@ -45,11 +45,6 @@ const Catalog = ({ user }) => {
       }
     }
   }
-//   const handleGetProduct = useCallback(async() => {
-//     const {data} = await $authHost.get(`/products/${params.id}`)
-//     setProductId(data)
-// }, [params.id])
-
 
   return (
     <>

@@ -17,7 +17,7 @@ const User = ({ user }) => {
   const handleProductAdd = async (data) => {
     const { title, category, description, price, image } = data
     try {
-      await $authHost.post('/products/add', {
+      await $authHost.post('/products', {
         title,
         category,
         description,

@@ -17,7 +17,7 @@ const Form = ({ user, setUser }) => {
   const registration = async (data) => {
     const { email, password } = data
     try {
-      const response = await $host.post('/user/register', {
+      const response = await $host.post('/users/register', {
         email,
         password,
       })
@@ -32,7 +32,7 @@ const Form = ({ user, setUser }) => {
   const login = async (data) => {
     const { email, password } = data
     try {
-      const response = await $host.post('/user/login', {
+      const response = await $host.post('/users/login', {
         email,
         password,
       })
@@ -41,7 +41,7 @@ const Form = ({ user, setUser }) => {
       localStorage.setItem('token', JSON.stringify(response.data.token))
 
       if (response.data.token) {
-        const userDataResponse = await $authHost.get('/user/me')
+        const userDataResponse = await $authHost.get('/users/me')
         const userData = userDataResponse.data
 
         setUser(userData.user)

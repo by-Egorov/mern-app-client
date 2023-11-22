@@ -17,6 +17,7 @@
     "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
+    "react-touch-events": "^3.0.0",
     "sass": "^1.69.5",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"

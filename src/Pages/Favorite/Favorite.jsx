@@ -15,7 +15,7 @@ const Favorite = ({ user }) => {
     const fetchMyFavorite = async () => {
       try {
         setIsLoading(true)
-        const { data } = await $authHost.get('/products/favorite')
+        const { data } = await $authHost.get('/favorites')
         setProductFavorite(data.list)
       } catch (e) {
         console.log(e)
@@ -33,7 +33,7 @@ const Favorite = ({ user }) => {
 
     if (selectedProduct) {
       try {
-        const response = await $authHost.post('/products/cart/add', {
+        const response = await $authHost.post('/cart/add', {
           productId: selectedProduct._id,
         })
 

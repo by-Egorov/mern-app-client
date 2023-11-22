@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await $authHost.get('/user/me')
+        const { data } = await $authHost.get('/users/me')
         setUser(data.user)
         localStorage.setItem('user', JSON.stringify(data.user))
       } catch (e) {
@@ -58,7 +58,7 @@ function App() {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-        <Route path='/product/:id' element={<ProductPage />} />
+        <Route path='/:id' element={<ProductPage />} />
         <Route
           path='/register'
           element={<Form user={user} setUser={setUser} />}
