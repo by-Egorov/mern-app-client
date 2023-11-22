@@ -1,0 +1,15 @@
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 150px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-radius: 30px;
+  background-color: #a19d9d;
+  padding: 0 10px 30px 10px;
+  z-index: 10;
+}

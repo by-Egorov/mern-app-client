@@ -5,7 +5,8 @@ import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
-import Button from '../../components/Button/Button'
+import Total from '../../components/Total/Total'
+import TotalSkeleton from "../../components/Total/Skeleton/TotalSkeleton";
 
 const Cart = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -84,20 +85,7 @@ const Cart = ({ user }) => {
             />
           ))}
         </div>
-        <div className={style.cart__total}>
-         <div className={style.cart__total_price}>
-           <span className={style.cart__total_price_title}>Total:</span>
-           <span className={style.cart__total_price_sum}>
-             $
-            {' '}
-             {productCart &&
-                 productCart.reduce((acc, rec) => acc + rec.price, 0)}
-          </span>
-         </div>
-          <div className={style.cart__total_button}>
-            <Button className={`button ${style.cart__total_button_btn}` }>Купить</Button>
-          </div>
-        </div>
+        {isLoading ?  <TotalSkeleton/> : <Total products={productCart} buttonText='Купить'/>}
       </div>
       <Footer />
     </>

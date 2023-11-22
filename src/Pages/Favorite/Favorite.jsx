@@ -5,13 +5,15 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
+import Total from '../../components/Total/Total'
+import TotalSkeleton from "../../components/Total/Skeleton/TotalSkeleton";
+
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
 
   const [isLoading, setIsLoading] = useState(true)
-  
-  useEffect(() => {
 
+  useEffect(() => {
     const fetchMyFavorite = async () => {
       try {
         setIsLoading(true)
@@ -20,7 +22,7 @@ const Favorite = ({ user }) => {
       } catch (e) {
         console.log(e)
       } finally {
-       setIsLoading(false)
+        setIsLoading(false)
       }
     }
     fetchMyFavorite()
@@ -50,18 +52,15 @@ const Favorite = ({ user }) => {
   return (
     <>
       <Header user={user} />
-
       <div className={style.favorite}>
-        
-          <div className={style.favorite__product}>
-            {isLoading && <ProductSkeleton products={4}/>}
-            {productFavorite?.map((favorite) => (
-              <Product {...favorite} key={favorite._id} addToCart={addToCart} />
-            ))}
-          </div>
-        
+        <div className={style.favorite__product}>
+          {isLoading && <ProductSkeleton products={4} />}
+          {productFavorite?.map((favorite) => (
+            <Product {...favorite} key={favorite._id} addToCart={addToCart} />
+          ))}
+        </div>
+        {isLoading ? <TotalSkeleton/> :  <Total products={productFavorite} buttonText='Добавить в корзину'/>}
       </div>
-
       <Footer />
     </>
   )
