@@ -48,6 +48,30 @@ const Favorite = ({ user }) => {
       }
     }
   }
+  const deleteInFavorite = async (productId) => {
+    const selectedProduct = productFavorite.find(
+      (product) => product._id === productId
+    )
+    if (selectedProduct) {
+      try {
+        const response = await $authHost.delete('/favorite/remove', {
+          data: { productId: selectedProduct._id },
+        })
+        await $authHost.patch('/product', {
+          productId: selectedProduct._id,
+          favorite: false
+        })
+        if (!response.ok) {
+          console.log('Ошибка удаления продукта.')
+        }
+        window.location.reload()
+        console.log('Продукт успешно удален.')
+      } catch (error) {
+        console.error('Произошла ошибка при отправке запроса:', error)
+      }
+    }
+  }
+
   console.log(productFavorite)
   return (
     <>
@@ -56,7 +80,7 @@ const Favorite = ({ user }) => {
         <div className={style.favorite__product}>
           {isLoading && <ProductSkeleton products={4} />}
           {productFavorite?.map((favorite) => (
-            <Product {...favorite} key={favorite._id}  favorite={favorite.favorite} addToCart={addToCart} productFavorite={productFavorite} />
+            <Product {...favorite} key={favorite._id}  favorite={favorite.favorite} addToCart={addToCart} productFavorite={productFavorite} deleteInFavorite={deleteInFavorite} />
           ))}
         </div>
         {isLoading ? <TotalSkeleton/> :  <Total products={productFavorite} buttonText='Добавить в корзину'/>}

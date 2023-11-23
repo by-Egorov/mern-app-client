@@ -4,6 +4,7 @@ import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
 import { IoMdHeartEmpty } from 'react-icons/io'
+import { FcLike } from "react-icons/fc";
 import { AiOutlineDelete } from 'react-icons/ai'
 import { CiCircleMore } from 'react-icons/ci'
 import { useLocation, Link } from 'react-router-dom'
@@ -18,6 +19,7 @@ const Product = ({
   customStyle,
   addToCart,
   addToFavorite,
+  deleteInFavorite,
   deleteInCart,
   handleCountChange,
   count,
@@ -45,8 +47,8 @@ const Product = ({
         <div className={style.product__info_description}>
           <p>{description}</p>
         </div>
-        <div className={`${style.product__info_favorite} ${favorite ? style.active : ''}`} onClick={() => addToFavorite(_id)}>
-        <IoMdHeartEmpty size='18'/>
+        <div className={style.product__info_favorite}>
+      {favorite ? <FcLike size='18' onClick={() => deleteInFavorite(_id)} /> : <IoMdHeartEmpty size='18' onClick={() => addToFavorite(_id)}/>}
       </div>
       </div>
       {location.pathname === '/favorite' && (

@@ -51,7 +51,7 @@ const Catalog = ({ user }) => {
       }
     }
   }
-
+  
 
   return (
     <>
