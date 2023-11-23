@@ -10,10 +10,6 @@
   border-radius: 20px;
   position: relative;
 
-  .active {
-    transform: translateX(300px);
-  }
-
   &__more {
     position: absolute;
     top: 0;
@@ -53,6 +49,11 @@
 
     &_description {
       font-size: 14px;
+    }
+    &_favorite {
+      &.active {
+          color: red;
+      }
     }
   }
 

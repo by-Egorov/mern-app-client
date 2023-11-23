@@ -6,10 +6,13 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import CatalogProduct from './CatalogProduct.module.scss'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
+import { useParams } from 'react-router-dom'
 
 const Catalog = ({ user }) => {
+  const params = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const [productCatalog, setProductCatalog] = useState([])
+  
   useEffect(() => {
     const fetchMyCatalog = async () => {
       try {
@@ -28,15 +31,18 @@ const Catalog = ({ user }) => {
     const selectedProduct = productCatalog.find(
       (product) => product._id === productId
     )
-    console.log(selectedProduct._id)
     if (selectedProduct) {
       try {
         const response = await $authHost.post('/favorites/add', {
           productId: selectedProduct._id,
         })
-        console.log(response)
+        await $authHost.patch('/product', {
+          productId: selectedProduct._id,
+          favorite: true
+        })
+        
         if (response.data) {
-          console.error('Продукт успешно добавлен в избранное.')
+          console.log('Продукт успешно добавлен в избранное.')
         } else {
           console.error('Не удалось добавить продукт в избранное.')
         }
@@ -45,6 +51,7 @@ const Catalog = ({ user }) => {
       }
     }
   }
+
 
   return (
     <>

@@ -10,7 +10,6 @@ import TotalSkeleton from "../../components/Total/Skeleton/TotalSkeleton";
 
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
-
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -19,6 +18,7 @@ const Favorite = ({ user }) => {
         setIsLoading(true)
         const { data } = await $authHost.get('/favorites')
         setProductFavorite(data.list)
+        console.log(productFavorite)
       } catch (e) {
         console.log(e)
       } finally {
@@ -32,7 +32,6 @@ const Favorite = ({ user }) => {
     const selectedProduct = productFavorite.find(
       (product) => product._id === productId
     )
-
     if (selectedProduct) {
       try {
         const response = await $authHost.post('/cart/add', {
@@ -49,6 +48,7 @@ const Favorite = ({ user }) => {
       }
     }
   }
+  console.log(productFavorite)
   return (
     <>
       <Header user={user} />
@@ -56,7 +56,7 @@ const Favorite = ({ user }) => {
         <div className={style.favorite__product}>
           {isLoading && <ProductSkeleton products={4} />}
           {productFavorite?.map((favorite) => (
-            <Product {...favorite} key={favorite._id} addToCart={addToCart} />
+            <Product {...favorite} key={favorite._id}  favorite={favorite.favorite} addToCart={addToCart} productFavorite={productFavorite} />
           ))}
         </div>
         {isLoading ? <TotalSkeleton/> :  <Total products={productFavorite} buttonText='Добавить в корзину'/>}
