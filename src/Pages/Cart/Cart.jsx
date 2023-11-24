@@ -11,7 +11,6 @@ import TotalSkeleton from '../../components/Total/Skeleton/TotalSkeleton'
 const Cart = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [productCart, setProductCart] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const fetchMyCart = async () => {
@@ -34,11 +33,10 @@ const Cart = ({ user }) => {
       const updatedCart = prevProductCart.map((product) => {
         if (product._id === productId) {
           const newCount = Math.max(1, (product.count || 0) + delta)
-          
-          
+
           return {
             ...product,
-            count: newCount
+            count: newCount,
           }
         }
 
@@ -74,9 +72,6 @@ const Cart = ({ user }) => {
         )
         setProductCart(newProductCart)
         localStorage.setItem('cart', JSON.stringify(newProductCart))
-        if (!response.status === 200) {
-          console.log('Ошибка удаления продукта.')
-        }
         console.log('Продукт успешно удален.')
       } catch (error) {
         console.error('Произошла ошибка при отправке запроса:', error)
@@ -97,7 +92,6 @@ const Cart = ({ user }) => {
               key={cart._id}
               handleCountChange={(delta) => handleCountChange(delta, cart._id)}
               deleteInCart={deleteInCart}
-              isOpen={isOpen}
             />
           ))}
         </div>

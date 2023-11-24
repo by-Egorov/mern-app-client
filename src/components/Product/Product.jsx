@@ -23,14 +23,13 @@ const Product = ({
   deleteInCart,
   handleCountChange,
   count,
-  isOpen,
   favorite
 }) => {
   const productClasses = classNames(style.product, customStyle)
   const location = useLocation()
 
   return (
-    <li className={`${productClasses} ${isOpen ? 'active' : ''}`}>
+    <li className={productClasses}>
       <Link to={`/${_id}`}>
         <div className={style.product__more}>
           <CiCircleMore size={18} />

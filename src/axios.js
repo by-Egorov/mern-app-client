@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const $host = axios.create({
-  baseURL: 'https://egorov-mern.onrender.com/api',
-  // baseURL: 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_WEB_URL,
+  // baseURL: process.env.REACT_APP_LOCAL_URL,
 })
 const $authHost = axios.create({
-  baseURL: 'https://egorov-mern.onrender.com/api',
-  // baseURL: 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_WEB_URL,
+  // baseURL: process.env.REACT_APP_LOCAL_URL,
 })
 const authInterceptor = (config) => {
   config.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('token'))}`

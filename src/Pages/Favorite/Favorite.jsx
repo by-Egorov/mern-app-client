@@ -60,7 +60,7 @@ const Favorite = ({ user }) => {
       setProductFavorite(newProductFavorite)
       localStorage.setItem('favorite', JSON.stringify(newProductFavorite))
       try {
-        const response = await $authHost.delete('/favorite/remove', {
+         await $authHost.delete('/favorite/remove', {
           data: { productId: selectedProduct._id },
         })
         await $authHost.patch('/product', {
@@ -69,9 +69,6 @@ const Favorite = ({ user }) => {
             favorite: false,
           }
         })
-        if (!response.status === 200) {
-          console.log('Ошибка удаления продукта.')
-        }
         console.log('Продукт успешно удален.')
       } catch (error) {
         console.error('Произошла ошибка при отправке запроса:', error)
