@@ -6,7 +6,7 @@ import Product from '../../components/Product/Product'
 import { $authHost } from '../../axios'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 import Total from '../../components/Total/Total'
-import TotalSkeleton from "../../components/Total/Skeleton/TotalSkeleton";
+import TotalSkeleton from '../../components/Total/Skeleton/TotalSkeleton'
 
 const Favorite = ({ user }) => {
   const [productFavorite, setProductFavorite] = useState([])
@@ -18,7 +18,7 @@ const Favorite = ({ user }) => {
         setIsLoading(true)
         const { data } = await $authHost.get('/favorites')
         setProductFavorite(data.list)
-        console.log(productFavorite)
+        localStorage.setItem('favorite', JSON.stringify(data.list))
       } catch (e) {
         console.log(e)
       } finally {
@@ -52,19 +52,26 @@ const Favorite = ({ user }) => {
     const selectedProduct = productFavorite.find(
       (product) => product._id === productId
     )
+
     if (selectedProduct) {
+      const newProductFavorite = productFavorite.filter(
+        (item) => item._id !== selectedProduct._id
+      )
+      setProductFavorite(newProductFavorite)
+      localStorage.setItem('favorite', JSON.stringify(newProductFavorite))
       try {
         const response = await $authHost.delete('/favorite/remove', {
           data: { productId: selectedProduct._id },
         })
         await $authHost.patch('/product', {
           productId: selectedProduct._id,
-          favorite: false
+          updates: {
+            favorite: false,
+          }
         })
-        if (!response.ok) {
+        if (!response.status === 200) {
           console.log('Ошибка удаления продукта.')
         }
-        window.location.reload()
         console.log('Продукт успешно удален.')
       } catch (error) {
         console.error('Произошла ошибка при отправке запроса:', error)
@@ -72,7 +79,6 @@ const Favorite = ({ user }) => {
     }
   }
 
-  console.log(productFavorite)
   return (
     <>
       <Header user={user} />
@@ -80,10 +86,21 @@ const Favorite = ({ user }) => {
         <div className={style.favorite__product}>
           {isLoading && <ProductSkeleton products={4} />}
           {productFavorite?.map((favorite) => (
-            <Product {...favorite} key={favorite._id}  favorite={favorite.favorite} addToCart={addToCart} productFavorite={productFavorite} deleteInFavorite={deleteInFavorite} />
+            <Product
+              {...favorite}
+              key={favorite._id}
+              favorite={favorite.favorite}
+              addToCart={addToCart}
+              productFavorite={productFavorite}
+              deleteInFavorite={deleteInFavorite}
+            />
           ))}
         </div>
-        {isLoading ? <TotalSkeleton/> :  <Total products={productFavorite} buttonText='Добавить в корзину'/>}
+        {isLoading ? (
+          <TotalSkeleton />
+        ) : (
+          <Total products={productFavorite} buttonText='Добавить в корзину' />
+        )}
       </div>
       <Footer />
     </>

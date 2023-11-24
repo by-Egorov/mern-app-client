@@ -6,10 +6,8 @@ import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
 import CatalogProduct from './CatalogProduct.module.scss'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
-import { useParams } from 'react-router-dom'
 
 const Catalog = ({ user }) => {
-  const params = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const [productCatalog, setProductCatalog] = useState([])
   
@@ -19,6 +17,7 @@ const Catalog = ({ user }) => {
         setIsLoading(true)
         const { data } = await $host.get('/products')
         setProductCatalog(data.products)
+        localStorage.setItem('catalog', JSON.stringify(data.products))
       } catch (e) {
         console.log(e)
       } finally {
@@ -38,9 +37,11 @@ const Catalog = ({ user }) => {
         })
         await $authHost.patch('/product', {
           productId: selectedProduct._id,
-          favorite: true
+          updates: {
+            favorite: true
+          }
         })
-        
+     
         if (response.data) {
           console.log('Продукт успешно добавлен в избранное.')
         } else {

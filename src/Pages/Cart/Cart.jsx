@@ -6,7 +6,7 @@ import { $authHost } from '../../axios'
 import Product from '../../components/Product/Product'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 import Total from '../../components/Total/Total'
-import TotalSkeleton from "../../components/Total/Skeleton/TotalSkeleton";
+import TotalSkeleton from '../../components/Total/Skeleton/TotalSkeleton'
 
 const Cart = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -19,7 +19,7 @@ const Cart = ({ user }) => {
         setIsLoading(true)
         const { data } = await $authHost.get('/cart')
         setProductCart(data.list)
-        localStorage.setItem('productCart', JSON.stringify(data.list))
+        localStorage.setItem('cart', JSON.stringify(data.list))
       } catch (e) {
         console.log(e)
       } finally {
@@ -29,23 +29,35 @@ const Cart = ({ user }) => {
     fetchMyCart()
   }, [])
 
-  const handleCountChange = (delta, productId) => {
-    setProductCart((prevProductCart) =>
-      prevProductCart.map((product) => {
-        const updatedProduct =
-          product._id === productId
-            ? { ...product, count: Math.max(1, (product.count || 0) + delta) }
-            : product
+  const handleCountChange = async (delta, productId) => {
+    setProductCart((prevProductCart) => {
+      const updatedCart = prevProductCart.map((product) => {
+        if (product._id === productId) {
+          const newCount = Math.max(1, (product.count || 0) + delta)
+          
+          
+          return {
+            ...product,
+            count: newCount
+          }
+        }
 
-        // Сохраняем обновленные данные в localStorage
-        localStorage.setItem(
-          `product_${product._id}`,
-          JSON.stringify(updatedProduct)
-        )
-
-        return updatedProduct
+        return product
       })
-    )
+      localStorage.setItem('cart', JSON.stringify(updatedCart))
+      const updateCart = JSON.parse(localStorage.getItem('cart'))
+      const updatedProduct = updateCart.find(
+        (product) => product._id === productId
+      )
+
+      $authHost.patch('/product', {
+        productId: updatedProduct._id,
+        updates: {
+          count: updatedProduct.count,
+        },
+      })
+      return updatedCart
+    })
   }
 
   const deleteInCart = async (productId) => {
@@ -57,10 +69,14 @@ const Cart = ({ user }) => {
         const response = await $authHost.delete('/cart/remove', {
           data: { productId: selectedProduct._id },
         })
-        if (!response.ok) {
+        const newProductCart = productCart.filter(
+          (item) => item._id !== selectedProduct._id
+        )
+        setProductCart(newProductCart)
+        localStorage.setItem('cart', JSON.stringify(newProductCart))
+        if (!response.status === 200) {
           console.log('Ошибка удаления продукта.')
         }
-        window.location.reload()
         console.log('Продукт успешно удален.')
       } catch (error) {
         console.error('Произошла ошибка при отправке запроса:', error)
@@ -85,7 +101,11 @@ const Cart = ({ user }) => {
             />
           ))}
         </div>
-        {isLoading ?  <TotalSkeleton/> : <Total products={productCart} buttonText='Купить'/>}
+        {isLoading ? (
+          <TotalSkeleton />
+        ) : (
+          <Total products={productCart} buttonText='Купить' />
+        )}
       </div>
       <Footer />
     </>
