@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './ProductPage.module.scss'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { $authHost } from '../../axios'
-import { BiMinus } from 'react-icons/bi'
-import { IoMdAdd } from 'react-icons/io'
-import {
-  MdMoreHoriz,
-  MdOutlineAddShoppingCart,
-  MdOutlineFavorite,
-  MdOutlineFavoriteBorder,
-  MdOutlineRemoveShoppingCart,
-} from 'react-icons/md'
 
 const ProductPage = () => {
   const [product, setProduct] = useState(null)
