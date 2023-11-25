@@ -3,12 +3,15 @@ import classNames from 'classnames'
 import style from './Product.module.scss'
 import { IoMdAdd } from 'react-icons/io'
 import { BiMinus } from 'react-icons/bi'
-import { IoMdHeartEmpty } from 'react-icons/io'
-import { FcLike } from "react-icons/fc";
-import { AiOutlineDelete } from 'react-icons/ai'
-import { CiCircleMore } from 'react-icons/ci'
 import { useLocation, Link } from 'react-router-dom'
 import 'react-loading-skeleton/dist/skeleton.css'
+import {
+  MdMoreHoriz,
+  MdOutlineAddShoppingCart,
+  MdOutlineFavorite,
+  MdOutlineFavoriteBorder,
+  MdOutlineRemoveShoppingCart,
+} from 'react-icons/md'
 
 const Product = ({
   _id,
@@ -23,18 +26,13 @@ const Product = ({
   deleteInCart,
   handleCountChange,
   count,
-  favorite
+  favorite,
 }) => {
   const productClasses = classNames(style.product, customStyle)
   const location = useLocation()
 
   return (
     <li className={productClasses}>
-      <Link to={`/${_id}`}>
-        <div className={style.product__more}>
-          <CiCircleMore size={18} />
-        </div>
-      </Link>
       <div className={style.product__image}>
         <img src={image} alt={title} />
       </div>
@@ -46,16 +44,7 @@ const Product = ({
         <div className={style.product__info_description}>
           <p>{description}</p>
         </div>
-        <div className={style.product__info_favorite}>
-      {favorite ? <FcLike size='18' onClick={() => deleteInFavorite(_id)} /> : <IoMdHeartEmpty size='18' onClick={() => addToFavorite(_id)}/>}
       </div>
-      </div>
-      {location.pathname === '/favorite' && (
-        <div className={style.product__icon} onClick={() => addToCart(_id)}>
-          <IoMdAdd size='18' />
-        </div>
-      )}
-
       {location.pathname === '/cart' && (
         <div className={style.product__count}>
           <button
@@ -73,16 +62,39 @@ const Product = ({
           </button>
         </div>
       )}
-      {location.pathname === '/cart' && (
-        <div>
-          <div
-            className={style.product__icon}
-            onClick={() => deleteInCart(_id)}
-          >
-            <AiOutlineDelete />
-          </div>
+      <div
+        className={`${
+          location.pathname === '/catalog'
+            ? style.product__actions_cat
+            : style.product__actions
+        }`}
+      >
+        <Link to={`/${_id}`}>
+          <MdMoreHoriz size={18} />
+        </Link>
+        <div className={style.product__actions_favorite}>
+          {favorite ? (
+            <MdOutlineFavorite
+              size='18'
+              onClick={() => deleteInFavorite(_id)}
+            />
+          ) : (
+            <MdOutlineFavoriteBorder
+              size='18'
+              onClick={() => addToFavorite(_id)}
+            />
+          )}
         </div>
-      )}
+        {location.pathname === '/favorite' && (
+          <MdOutlineAddShoppingCart size={18} onClick={() => addToCart(_id)} />
+        )}
+        {location.pathname === '/cart' && (
+          <MdOutlineRemoveShoppingCart
+            size={18}
+            onClick={() => deleteInCart(_id)}
+          />
+        )}
+      </div>
     </li>
   )
 }

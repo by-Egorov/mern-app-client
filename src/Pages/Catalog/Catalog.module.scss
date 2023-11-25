@@ -1,10 +1,13 @@
 .catalog {
 	margin: 0 auto;
-	padding-bottom: 70px; 
+	padding-bottom: 70px;
+	padding-left: 5px;
+	padding-right: 5px;
 
 	&__product {
         display: flex;
-        flex-wrap: wrap; 
+        flex-wrap: wrap;
+		justify-content: center;
         gap: 15px;
 	}
 }

@@ -96,7 +96,7 @@ const Favorite = ({ user }) => {
         {isLoading ? (
           <TotalSkeleton />
         ) : (
-          <Total products={productFavorite} buttonText='Добавить в корзину' />
+          <Total products={productFavorite} addToCart={addToCart} buttonText='Добавить в корзину' />
         )}
       </div>
       <Footer />

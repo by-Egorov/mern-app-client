@@ -4,13 +4,13 @@ import Footer from '../../components/Footer/Footer'
 import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
-import CatalogProduct from './CatalogProduct.module.scss'
+import ProductCatalog from './ProductCatalog.module.scss'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 
 const Catalog = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [productCatalog, setProductCatalog] = useState([])
-  
+
   useEffect(() => {
     const fetchMyCatalog = async () => {
       try {
@@ -26,6 +26,8 @@ const Catalog = ({ user }) => {
     }
     fetchMyCatalog()
   }, [])
+
+
   const addToFavorite = async (productId) => {
     const selectedProduct = productCatalog.find(
       (product) => product._id === productId
@@ -38,10 +40,10 @@ const Catalog = ({ user }) => {
         await $authHost.patch('/product', {
           productId: selectedProduct._id,
           updates: {
-            favorite: true
-          }
+            favorite: true,
+          },
         })
-     
+
         if (response.data) {
           console.log('Продукт успешно добавлен в избранное.')
         } else {
@@ -59,12 +61,17 @@ const Catalog = ({ user }) => {
       <Header user={user} />
       <div className={style.catalog}>
         <div className={style.catalog__product}>
-          {isLoading && <ProductSkeleton products={6} customStyle={CatalogProduct.specialStyles} />}
+          {isLoading && (
+            <ProductSkeleton
+              products={6}
+              customStyle={ProductCatalog.specialStyles}
+            />
+          )}
           {productCatalog.map((product) => (
             <Product
               {...product}
               key={product._id}
-              customStyle={CatalogProduct.specialStyles}
+              customStyle={ProductCatalog.specialStylesCatalog}
               addToFavorite={addToFavorite}
             />
           ))}
