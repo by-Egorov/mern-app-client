@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import { $authHost } from '../../axios'
 import Footer from '../../components/Footer/Footer'
-import style from './Favorite.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
-import { $authHost } from '../../axios'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
-import Total from '../../components/Total/Total'
 import TotalSkeleton from '../../components/Total/Skeleton/TotalSkeleton'
+import Total from '../../components/Total/Total'
+import { deleteInFavorite } from '../../utils/productFunction'
+import style from './Favorite.module.scss'
 
-const Favorite = ({ user }) => {
+const Favorite = ({
+  user,
+  isLoading,
+  setIsLoading,
+  isFavorite,
+  setIsFavorite,
+}) => {
   const [productFavorite, setProductFavorite] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchMyFavorite = async () => {
@@ -48,7 +54,7 @@ const Favorite = ({ user }) => {
       }
     }
   }
-  const deleteInFavorite = async (productId) => {
+  const handleDeleteInFavorite = async (productId) => {
     const selectedProduct = productFavorite.find(
       (product) => product._id === productId
     )
@@ -59,20 +65,7 @@ const Favorite = ({ user }) => {
       )
       setProductFavorite(newProductFavorite)
       localStorage.setItem('favorite', JSON.stringify(newProductFavorite))
-      try {
-         await $authHost.delete('/favorite/remove', {
-          data: { productId: selectedProduct._id },
-        })
-        await $authHost.patch('/product', {
-          productId: selectedProduct._id,
-          updates: {
-            favorite: false,
-          }
-        })
-        console.log('Продукт успешно удален.')
-      } catch (error) {
-        console.error('Произошла ошибка при отправке запроса:', error)
-      }
+      await deleteInFavorite(selectedProduct, setIsFavorite)
     }
   }
 
@@ -86,17 +79,23 @@ const Favorite = ({ user }) => {
             <Product
               {...favorite}
               key={favorite._id}
-              favorite={favorite.favorite}
+              // favorite={favorite.favorite}
               addToCart={addToCart}
               productFavorite={productFavorite}
-              deleteInFavorite={deleteInFavorite}
+              handleDeleteInFavorite={handleDeleteInFavorite}
+              isFavorite={isFavorite}
             />
           ))}
         </div>
         {isLoading ? (
           <TotalSkeleton />
         ) : (
-          <Total products={productFavorite} addToCart={addToCart} spanText='Total:' buttonText='Добавить в корзину' />
+          <Total
+            products={productFavorite}
+            addToCart={addToCart}
+            spanText='Total:'
+            buttonText='Добавить в корзину'
+          />
         )}
       </div>
       <Footer />

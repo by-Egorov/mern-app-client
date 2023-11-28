@@ -33,7 +33,7 @@ const ProductPage = () => {
               <span>${product.price}</span>
             </div>
             <div className={style.product__info_description}>
-              <p>{product.description}</p>
+              <span>{product.description}</span>
             </div>
           </div>
 

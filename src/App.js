@@ -13,6 +13,7 @@ import User from './components/User/User.jsx'
 function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,20 +44,34 @@ function App() {
               user={user}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+              isFavorite={isFavorite}
+              setIsFavorite={setIsFavorite}
             />
           }
         />
         <Route
           path='/favorite'
-          element={<Favorite user={user} />}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          element={
+            <Favorite
+              user={user}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              isFavorite={isFavorite}
+              setIsFavorite={setIsFavorite}
+            />
+          }
         />
         <Route
           path='/cart'
-          element={<Cart user={user} />}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          element={
+            <Cart
+              user={user}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              isFavorite={isFavorite}
+              setIsFavorite={setIsFavorite}
+            />
+          }
         />
         <Route path='/:id' element={<ProductPage />} />
         <Route

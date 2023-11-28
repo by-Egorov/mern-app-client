@@ -3,13 +3,13 @@ import Footer from '../../components/Footer/Footer'
 import style from './Cart.module.scss'
 import Header from '../../components/Header/Header'
 import { $authHost } from '../../axios'
+import { deleteInCart } from '../../utils/productFunction'
 import Product from '../../components/Product/Product'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
 import Total from '../../components/Total/Total'
 import TotalSkeleton from '../../components/Total/Skeleton/TotalSkeleton'
 
-const Cart = ({ user }) => {
-  const [isLoading, setIsLoading] = useState(true)
+const Cart = ({ user, isLoading, setIsLoading, isFavorite }) => {
   const [productCart, setProductCart] = useState([])
 
   useEffect(() => {
@@ -28,7 +28,6 @@ const Cart = ({ user }) => {
     fetchMyCart()
   }, [])
 
-
   const handleCountInc = async (productId) => {
     setProductCart((cart) => {
       const newCart = cart.map((product) => {
@@ -44,7 +43,7 @@ const Cart = ({ user }) => {
       localStorage.setItem('cart', JSON.stringify(newCart))
       const updProducts = JSON.parse(localStorage.getItem('cart'))
       const updProduct = updProducts.find(
-          (product) => product._id === productId
+        (product) => product._id === productId
       )
       const { data } = $authHost.patch('/product', {
         productId: updProduct._id,
@@ -72,7 +71,7 @@ const Cart = ({ user }) => {
       localStorage.setItem('cart', JSON.stringify(newCart))
       const updProducts = JSON.parse(localStorage.getItem('cart'))
       const updProduct = updProducts.find(
-          (product) => product._id === productId
+        (product) => product._id === productId
       )
       const { data } = $authHost.patch('/product', {
         productId: updProduct._id,
@@ -85,24 +84,12 @@ const Cart = ({ user }) => {
     })
   }
 
-  const deleteInCart = async (productId) => {
+  const handleDeleteInCart = async (productId) => {
     const selectedProduct = productCart.find(
       (product) => product._id === productId
     )
     if (selectedProduct) {
-      try {
-        const response = await $authHost.delete('/cart/remove', {
-          data: { productId: selectedProduct._id },
-        })
-        const newProductCart = productCart.filter(
-          (item) => item._id !== selectedProduct._id
-        )
-        setProductCart(newProductCart)
-        localStorage.setItem('cart', JSON.stringify(newProductCart))
-        console.log('Продукт успешно удален.')
-      } catch (error) {
-        console.error('Произошла ошибка при отправке запроса:', error)
-      }
+     await deleteInCart(selectedProduct, setProductCart, productCart)
     }
   }
 
@@ -118,7 +105,8 @@ const Cart = ({ user }) => {
               key={cart._id}
               handleCountInc={handleCountInc}
               handleCountDec={handleCountDec}
-              deleteInCart={deleteInCart}
+              handleDeleteInCart={handleDeleteInCart}
+              isFavorite={isFavorite}
             />
           ))}
         </div>

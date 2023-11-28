@@ -1,60 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import { $host, $authHost } from '../../axios'
+import { $host } from '../../axios'
 import Footer from '../../components/Footer/Footer'
-import style from './Catalog.module.scss'
 import Header from '../../components/Header/Header'
 import Product from '../../components/Product/Product'
-import ProductCatalog from './ProductCatalog.module.scss'
 import ProductSkeleton from '../../components/Skeleton/ProductSkeleton'
+import { addToFavorite, deleteInFavorite } from '../../utils/productFunction'
+import style from './Catalog.module.scss'
+import ProductCatalog from './ProductCatalog.module.scss'
 
-const Catalog = ({ user }) => {
-  const [isLoading, setIsLoading] = useState(true)
+const Catalog = ({
+  user,
+  setIsLoading,
+  isLoading
+}) => {
   const [productCatalog, setProductCatalog] = useState([])
 
-  useEffect(() => {
-    const fetchMyCatalog = async () => {
-      try {
-        setIsLoading(true)
-        const { data } = await $host.get('/products')
-        setProductCatalog(data.products)
-        localStorage.setItem('catalog', JSON.stringify(data.products))
-      } catch (e) {
-        console.log(e)
-      } finally {
-        setIsLoading(false)
-      }
+  const fetchMyCatalog = async () => {
+    try {
+      setIsLoading(true)
+      const { data } = await $host.get('/products')
+      setProductCatalog(data.products)
+      localStorage.setItem('catalog', JSON.stringify(data.products))
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setIsLoading(false)
     }
+  }
+
+  useEffect(() => {
     fetchMyCatalog()
   }, [])
 
-
-  const addToFavorite = async (productId) => {
+  const handleAddToFavorite = async (productId) => {
     const selectedProduct = productCatalog.find(
       (product) => product._id === productId
     )
     if (selectedProduct) {
-      try {
-        const response = await $authHost.post('/favorites/add', {
-          productId: selectedProduct._id,
-        })
-        await $authHost.patch('/product', {
-          productId: selectedProduct._id,
-          updates: {
-            favorite: true,
-          },
-        })
-
-        if (response.data) {
-          console.log('Продукт успешно добавлен в избранное.')
-        } else {
-          console.error('Не удалось добавить продукт в избранное.')
-        }
-      } catch (error) {
-        console.error('Произошла ошибка при отправке запроса:', error)
-      }
+      await addToFavorite(selectedProduct, productCatalog, setProductCatalog)
+      fetchMyCatalog()
     }
   }
-  
+
+  const handleDeleteInFavorite = async (productId) => {
+    const selectedProduct = productCatalog.find(
+      (product) => product._id === productId
+    )
+    if (selectedProduct) {
+      await deleteInFavorite(selectedProduct)
+      fetchMyCatalog()
+    }
+  }
 
   return (
     <>
@@ -72,7 +68,9 @@ const Catalog = ({ user }) => {
               {...product}
               key={product._id}
               customStyle={ProductCatalog.specialStylesCatalog}
-              addToFavorite={addToFavorite}
+              handleAddToFavorite={handleAddToFavorite}
+              handleDeleteInFavorite={handleDeleteInFavorite}
+              favorite={product.favorite}
             />
           ))}
         </div>

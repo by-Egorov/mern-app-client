@@ -22,13 +22,14 @@ const Product = ({
   image,
   customStyle,
   addToCart,
-  addToFavorite,
-  deleteInFavorite,
-  deleteInCart,
+  handleAddToFavorite,
+  handleDeleteInFavorite,
+  handleDeleteInCart,
   handleCountInc,
   handleCountDec,
   count,
-  favorite,
+  favorite
+  // favorite,
 }) => {
   const productClasses = classNames(style.product, customStyle)
   const location = useLocation()
@@ -84,12 +85,12 @@ const Product = ({
           {favorite ? (
             <MdOutlineFavorite
               size='18'
-              onClick={() => deleteInFavorite(_id)}
+              onClick={() => handleDeleteInFavorite(_id)}
             />
           ) : (
             <MdOutlineFavoriteBorder
               size='18'
-              onClick={() => addToFavorite(_id)}
+              onClick={() => handleAddToFavorite(_id)}
             />
           )}
         </div>
@@ -99,7 +100,7 @@ const Product = ({
         {location.pathname === '/cart' && (
           <MdOutlineRemoveShoppingCart
             size={18}
-            onClick={() => deleteInCart(_id)}
+            onClick={() => handleDeleteInCart(_id)}
           />
         )}
       </div>

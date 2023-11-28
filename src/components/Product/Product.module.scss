@@ -6,12 +6,14 @@
   align-items: center;
   width: 374px;
   height: 145px;
-  gap: 18px;
+  gap: 10px;
   background: #fff;
   border-radius: 20px;
   position: relative;
 
   &__image {
+    width: 106px;
+    height: 106px;
     & img {
       width: 106px;
       height: 106px;
@@ -27,6 +29,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 80px;
 
     &_title {
       color: #201a25;
@@ -42,7 +45,26 @@
     }
 
     &_description {
+      overflow: hidden;
+      position: relative;
+      height: 30px;
       font-size: 14px;
+
+      &:after {
+        content: '';
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 1.2em;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0),
+          white 100%
+        );
+        pointer-events: none;
+      }
     }
   }
 
@@ -72,13 +94,12 @@
     gap: 15px;
     right: 0;
     padding-right: 10px;
-    &_cat{
+    &_cat {
       position: absolute;
       top: 5px;
       right: 10px;
     }
     &_favorite {
-
       &.active {
         color: red;
       }
