@@ -28,33 +28,64 @@ const Cart = ({ user }) => {
     fetchMyCart()
   }, [])
 
-  const handleCountChange = async (delta, productId) => {
-    setProductCart((prevProductCart) => {
-      const updatedCart = prevProductCart.map((product) => {
-        if (product._id === productId) {
-          const newCount = Math.max(1, (product.count || 0) + delta)
 
+  const handleCountInc = async (productId) => {
+    setProductCart((cart) => {
+      const newCart = cart.map((product) => {
+        if (product._id === productId) {
+          return {
+            ...product,
+            count: ++product.count,
+            totalPrice: product.count * product.price,
+          }
+        }
+        return product
+      })
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      const updProducts = JSON.parse(localStorage.getItem('cart'))
+      console.log(updProducts)
+      const updProduct = updProducts.find(
+          (product) => product._id === productId
+      )
+      console.log(updProduct)
+      const { data } = $authHost.patch('/product', {
+        productId: updProduct._id,
+        updates: {
+          count: updProduct.count,
+          totalPrice: updProduct.totalPrice,
+        },
+      })
+      return newCart
+    })
+  }
+  const handleCountDec = async (productId) => {
+    setProductCart((cart) => {
+      const newCart = cart.map((product) => {
+        if (product._id === productId) {
+          const newCount = product.count - 1 > 1 ? --product.count : 1
           return {
             ...product,
             count: newCount,
+            totalPrice: newCount * product.price,
           }
         }
-
         return product
       })
-      localStorage.setItem('cart', JSON.stringify(updatedCart))
-      const updateCart = JSON.parse(localStorage.getItem('cart'))
-      const updatedProduct = updateCart.find(
-        (product) => product._id === productId
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      const updProducts = JSON.parse(localStorage.getItem('cart'))
+      console.log(updProducts)
+      const updProduct = updProducts.find(
+          (product) => product._id === productId
       )
-
-      $authHost.patch('/product', {
-        productId: updatedProduct._id,
+      console.log(updProduct)
+      const { data } = $authHost.patch('/product', {
+        productId: updProduct._id,
         updates: {
-          count: updatedProduct.count,
+          count: updProduct.count,
+          totalPrice: updProduct.totalPrice,
         },
       })
-      return updatedCart
+      return newCart
     })
   }
 
@@ -82,7 +113,6 @@ const Cart = ({ user }) => {
   return (
     <>
       <Header user={user} />
-
       <div className={style.cart}>
         <div className={style.cart__product}>
           {isLoading && <ProductSkeleton products={4} />}
@@ -90,7 +120,8 @@ const Cart = ({ user }) => {
             <Product
               {...cart}
               key={cart._id}
-              handleCountChange={(delta) => handleCountChange(delta, cart._id)}
+              handleCountInc={handleCountInc}
+              handleCountDec={handleCountDec}
               deleteInCart={deleteInCart}
             />
           ))}
@@ -98,7 +129,7 @@ const Cart = ({ user }) => {
         {isLoading ? (
           <TotalSkeleton />
         ) : (
-          <Total products={productCart} buttonText='Купить' />
+          <Total products={productCart} spanText='Total:' buttonText='Купить' />
         )}
       </div>
       <Footer />

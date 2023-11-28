@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 const $host = axios.create({
   baseURL: process.env.REACT_APP_WEB_URL,
   // baseURL: process.env.REACT_APP_LOCAL_URL,

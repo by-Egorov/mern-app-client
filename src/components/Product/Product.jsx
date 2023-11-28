@@ -18,13 +18,15 @@ const Product = ({
   title,
   description,
   price,
+  totalPrice,
   image,
   customStyle,
   addToCart,
   addToFavorite,
   deleteInFavorite,
   deleteInCart,
-  handleCountChange,
+  handleCountInc,
+  handleCountDec,
   count,
   favorite,
 }) => {
@@ -39,7 +41,9 @@ const Product = ({
       <div className={style.product__info}>
         <div className={style.product__info_title}>{title}</div>
         <div className={style.product__info_price}>
-          <span>{price} USD</span>
+          <span>
+            $ {location.pathname === '/cart' ? totalPrice : price}
+          </span>
         </div>
         <div className={style.product__info_description}>
           <p>{description}</p>
@@ -49,14 +53,18 @@ const Product = ({
         <div className={style.product__count}>
           <button
             className={style.product__count_btn}
-            onClick={() => handleCountChange(-1, _id)}
+            onClick={() => {
+              handleCountDec(_id)
+            }}
           >
             <BiMinus size='18' />
           </button>
           <span>{count}</span>
           <button
             className={style.product__count_btn}
-            onClick={() => handleCountChange(1, _id)}
+            onClick={() => {
+              handleCountInc(_id)
+            }}
           >
             <IoMdAdd size='18' />
           </button>

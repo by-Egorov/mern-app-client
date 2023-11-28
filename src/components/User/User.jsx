@@ -5,8 +5,10 @@ import style from './User.module.scss'
 import Button from '../Button/Button'
 import testIcon from '../../assets/Profile/Ellipse.svg'
 import show from '../../assets/Profile/show.svg'
+import {useNavigate} from "react-router-dom";
 
 const User = ({ user }) => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -15,13 +17,14 @@ const User = ({ user }) => {
   const isAdmin = user.roles.includes('ADMIN')
 
   const handleProductAdd = async (data) => {
-    const { title, category, description, price, image } = data
+    const { title, category, description, price, totalPrice, image } = data
     try {
       await $authHost.post('/products', {
         title,
         category,
         description,
         price,
+        totalPrice,
         image,
       })
 
@@ -30,6 +33,7 @@ const User = ({ user }) => {
         category: '',
         description: '',
         price: '',
+        totalPrice: '',
         image: '',
       }
       reset(emptyFormData)
@@ -41,7 +45,7 @@ const User = ({ user }) => {
   const logOut = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    window.location.reload()
+    navigate('/login')
   }
 
   return (
@@ -161,6 +165,12 @@ const User = ({ user }) => {
                       >
                         <label>Price</label>
                         <input {...register('price')} type='number' />
+                      </div>
+                      <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                      >
+                        <label>totalPrice</label>
+                        <input {...register('totalPrice')} type='number' />
                       </div>
                       <div
                         className={`${style.register__inputs_input} ${style.input_password}`}
