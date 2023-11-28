@@ -43,11 +43,9 @@ const Cart = ({ user }) => {
       })
       localStorage.setItem('cart', JSON.stringify(newCart))
       const updProducts = JSON.parse(localStorage.getItem('cart'))
-      console.log(updProducts)
       const updProduct = updProducts.find(
           (product) => product._id === productId
       )
-      console.log(updProduct)
       const { data } = $authHost.patch('/product', {
         productId: updProduct._id,
         updates: {
@@ -73,11 +71,9 @@ const Cart = ({ user }) => {
       })
       localStorage.setItem('cart', JSON.stringify(newCart))
       const updProducts = JSON.parse(localStorage.getItem('cart'))
-      console.log(updProducts)
       const updProduct = updProducts.find(
           (product) => product._id === productId
       )
-      console.log(updProduct)
       const { data } = $authHost.patch('/product', {
         productId: updProduct._id,
         updates: {
@@ -115,7 +111,7 @@ const Cart = ({ user }) => {
       <Header user={user} />
       <div className={style.cart}>
         <div className={style.cart__product}>
-          {isLoading && <ProductSkeleton products={4} />}
+          {isLoading && <ProductSkeleton products={5} />}
           {productCart?.map((cart) => (
             <Product
               {...cart}
