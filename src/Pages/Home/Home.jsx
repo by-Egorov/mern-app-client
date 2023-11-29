@@ -4,32 +4,11 @@ import newsIcon from '../../assets/Shop/Icons.svg'
 import favorites from '../../assets/Shop/favorites.svg'
 import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
-import Carousel from 'react-bootstrap/Carousel'
 
 const Home = ({ user }) => {
-  const [photo, setPhoto] = useState([])
-
-  useEffect(() => {
-    const photoId = Array.from({ length: 10 }, () =>
-      Math.round(Math.random() * 5000 + 1)
-    )
-
-    const getRandomPhoto = async (photoId) => {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/photos?_limit=${photoId.length}&_page=1`
-      )
-      const data = await response.json()
-      setPhoto(data)
-      localStorage.setItem('home', JSON.stringify(data))
-    }
-    getRandomPhoto(photoId)
-  }, [])
-
-		const [index, setIndex] = useState(0);
-	
-		const handleSelect = (selectedIndex) => {
-			setIndex(selectedIndex);
-		}
+ 
+   
+ 
   return (
     <>
       <Header user={user} />
@@ -39,14 +18,9 @@ const Home = ({ user }) => {
             <h1>News & Community</h1>
           </div>
           <div className={style.news__slides}>
-            <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
-              {photo &&
-                photo.map((item) => (
-                  <Carousel.Item key={item.title}>
-                    <img src={item.url} alt={item.title} />
-                  </Carousel.Item>
-                ))}
-            </Carousel>
+           
+              
+            
           </div>
         </section>
         <section className={style.arrivals}>
