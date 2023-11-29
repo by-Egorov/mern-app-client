@@ -29,7 +29,6 @@ const Product = ({
   handleCountDec,
   count,
   favorite
-  // favorite,
 }) => {
   const productClasses = classNames(style.product, customStyle)
   const location = useLocation()

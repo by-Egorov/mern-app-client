@@ -92,7 +92,10 @@ const Cart = ({ user, isLoading, setIsLoading, isFavorite }) => {
      await deleteInCart(selectedProduct, setProductCart, productCart)
     }
   }
+  
 
+
+   
   return (
     <>
       <Header user={user} />
