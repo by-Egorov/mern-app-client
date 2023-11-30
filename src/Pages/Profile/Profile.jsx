@@ -5,6 +5,7 @@ import AccountImg from '../../assets/Profile/Account.svg'
 import Button from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import { Link } from 'react-router-dom'
+import Footer from '../../components/Footer/Footer'
 
 function Profile({ user, setUser }) {
 	return (
@@ -29,6 +30,7 @@ function Profile({ user, setUser }) {
 					</div>
 				</div>
 			)}
+			<Footer/>
 		</>
 	)
 }

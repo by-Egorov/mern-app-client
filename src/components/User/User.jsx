@@ -1,20 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { $authHost } from '../../axios'
 import style from './User.module.scss'
 import Button from '../Button/Button'
+import { IoIosArrowDropright } from 'react-icons/io'
 import testIcon from '../../assets/Profile/Ellipse.svg'
-import show from '../../assets/Profile/show.svg'
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 const User = ({ user }) => {
   const navigate = useNavigate()
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   const isAdmin = user.roles.includes('ADMIN')
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleProductAdd = async (data) => {
     const { title, category, description, price, totalPrice, image } = data
@@ -47,13 +44,13 @@ const User = ({ user }) => {
     localStorage.removeItem('user')
     navigate('/login')
   }
+  const open = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <>
       <div className={style.account}>
-        <div className={style.account__info}>
-          <div className={style.account__info_mail}>{user.email}</div>
-        </div>
         <div className={style.account__settings}>
           <ul className={style.setting}>
             <li className={style.setting__item}>
@@ -67,7 +64,7 @@ const User = ({ user }) => {
                 </div>
               </div>
               <div className={style.setting__show}>
-                <img src={show} alt='show' />
+                <IoIosArrowDropright size={25} color='#C3C6C9' />
               </div>
             </li>
             <li className={style.setting__item}>
@@ -81,7 +78,7 @@ const User = ({ user }) => {
                 </div>
               </div>
               <div className={style.setting__show}>
-                <img src={show} alt='show' />
+                <IoIosArrowDropright size={25} color='#C3C6C9' />
               </div>
             </li>
             <li className={style.setting__item}>
@@ -95,7 +92,7 @@ const User = ({ user }) => {
                 </div>
               </div>
               <div className={style.setting__show}>
-                <img src={show} alt='show' />
+                <IoIosArrowDropright size={25} color='#C3C6C9' />
               </div>
             </li>
           </ul>
@@ -113,7 +110,7 @@ const User = ({ user }) => {
                   </div>
                 </div>
                 <div className={style.setting__show}>
-                  <img src={show} alt='show' />
+                  <IoIosArrowDropright size={25} color='#C3C6C9' />
                 </div>
               </li>
               <li className={style.setting__item}>
@@ -127,7 +124,7 @@ const User = ({ user }) => {
                   </div>
                 </div>
                 <div className={style.setting__show}>
-                  <img src={show} alt='show' />
+                  <IoIosArrowDropright size={25} color='#C3C6C9' />
                 </div>
               </li>
 
@@ -140,56 +137,75 @@ const User = ({ user }) => {
                     <div className={style.setting__info_title}>
                       Добавить продукт.
                     </div>
-
-                    <div className={style.form}>
-                      <div
-                        className={`${style.register__inputs_input} ${style.input_email}`}
-                      >
-                        <label>Title</label>
-                        <input {...register('title')} />
-                      </div>
-                      <div
-                        className={`${style.register__inputs_input} ${style.input_email}`}
-                      >
-                        <label>Category</label>
-                        <input {...register('category')} />
-                      </div>
-                      <div
-                        className={`${style.register__inputs_input} ${style.input_email}`}
-                      >
-                        <label>Description</label>
-                        <input {...register('description')} />
-                      </div>
-                      <div
-                        className={`${style.register__inputs_input} ${style.input_email}`}
-                      >
-                        <label>Price</label>
-                        <input {...register('price')} type='number' />
-                      </div>
-                      <div
-                          className={`${style.register__inputs_input} ${style.input_email}`}
-                      >
-                        <label>totalPrice</label>
-                        <input {...register('totalPrice')} type='number' />
-                      </div>
-                      <div
-                        className={`${style.register__inputs_input} ${style.input_password}`}
-                      >
-                        <label> Image </label>
-                        <input {...register('image')} />
-                      </div>
-                      <div className={style.btn}>
-                        <button
-                          className={style.btn_send}
-                          onClick={handleSubmit(handleProductAdd)}
-                        >
-                          Добавить
-                        </button>
-                      </div>
-                    </div>
                   </div>
+                  <div className={style.setting__show}>
+                     {isOpen ?  <IoIosArrowDropright
+                        size={25}
+                        color='#000'
+                        style = {{transform: 'rotate(270deg)' }}
+                        onClick={() => {
+                          open()
+                        }}
+                      /> :
+                      <IoIosArrowDropright
+                      size={25}
+                      color='#C3C6C9'
+                      style = {{transform: 'rotate(90deg)' }}
+                      onClick={() => {
+                        open()
+                      }}
+                    />}
+                    </div>
                 </li>
               ) : null}
+               {isOpen && (
+                      <div className={style.form}>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                        >
+                          <label>Title</label>
+                          <input {...register('title')} />
+                        </div>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                        >
+                          <label>Category</label>
+                          <input {...register('category')} />
+                        </div>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                        >
+                          <label>Description</label>
+                          <input {...register('description')} />
+                        </div>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                        >
+                          <label>Price</label>
+                          <input {...register('price')} type='number' />
+                        </div>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_email}`}
+                        >
+                          <label>totalPrice</label>
+                          <input {...register('totalPrice')} type='number' />
+                        </div>
+                        <div
+                          className={`${style.register__inputs_input} ${style.input_password}`}
+                        >
+                          <label> Image </label>
+                          <input {...register('image')} />
+                        </div>
+                        <div className={style.btn}>
+                          <button
+                            className={style.btn_send}
+                            onClick={handleSubmit(handleProductAdd)}
+                          >
+                            Добавить
+                          </button>
+                        </div>
+                      </div>
+                    )}
             </ul>
           </div>
         </div>
